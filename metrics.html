@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="metrics.css">
+    <script src="https://kit.fontawesome.com/2a56506141.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.anychart.com/releases/8.13.0/js/anychart-base.min.js" type="text/javascript"></script>
+    <script src="https://cdn.anychart.com/releases/8.13.0/js/anychart-core.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.13.0/js/anychart-circular-gauge.min.js"></script>
+    <script src="metrics.js"></script>
+    <title>Customer Home Page</title>
+</head>
+<body>
+    <!-- Existing Content -->
+     <div class="customer-logo">
+         <img src="https://cskcustomer1.s3.us-east-1.amazonaws.com/custlogo.png" alt="Customer Logo">
+     </div>
+    <div class="main-container-wrapper">
+        <div class="text-center mb-3">
+            <p class="selection-status">Account: <span id="selected-account">Select Account</span>, Instance: <span id="selected-instance">Select Instance</span></p>
+        </div>
+        <div class="d-flex flex-wrap">
+            <div class="d-flex mr-3">
+                <label for="customStartDate">Start Date</label>
+                <input type="date" id="customStartDate" oninput="enableCustomTimeframeButton()">
+            </div>
+            <div class="d-flex mr-3">
+                <label for="startTime">Start Time</label>
+                <input type="time" id="startTime" oninput="enableCustomTimeframeButton()">
+            </div>
+            <div class="d-flex mr-3">
+                <label for="customEndDate">End Date</label>
+                <input type="date" id="customEndDate" oninput="enableCustomTimeframeButton()">
+            </div>
+            <div class="d-flex mr-3">
+                <label for="endTime">End Time</label>
+                <input type="time" id="endTime" oninput="enableCustomTimeframeButton()">
+            </div>
+            <div class="d-flex dropdown mr-3">
+                <button class="btn btn-info dropdown-toggle" type="button" id="timezoneButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">UTC Timezone</button>
+                  <div class="dropdown-menu" aria-labelledby="timezoneButton">
+                    <button class="dropdown-item"  type="button" onclick="timezoneDropdownChoice(event)">UTC Timezone</button>
+                    <button class="dropdown-item" type="button" onclick="timezoneDropdownChoice(event)">Local Timezone</button>
+                    <button class="dropdown-item" type="button" onclick="timezoneDropdownChoice(event)">Hawaii Time</button>
+                    <button class="dropdown-item" type="button" onclick="timezoneDropdownChoice(event)">Alaska Time</button>
+                    <button class="dropdown-item" type="button" onclick="timezoneDropdownChoice(event)">Pacific Time</button>
+                    <button class="dropdown-item" type="button" onclick="timezoneDropdownChoice(event)">Mountain Time</button>
+                    <button class="dropdown-item" type="button" onclick="timezoneDropdownChoice(event)">Central Time</button>
+                    <button class="dropdown-item" type="button" onclick="timezoneDropdownChoice(event)">Eastern Time</button>
+                  </div>
+            </div>
+            <div class="d-flex dropdown mr-3">
+                <button class="btn btn-info dropdown-toggle" type="button" id="timezoneButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Metrics</button>
+                <div class="dropdown-menu" aria-labelledby="timezoneButton">
+                    <div class="dropdown-item">
+                        <input class="form-check-input" type="checkbox" id="alphaMetric1" value="Alpha">
+                        <label class="form-check-label" for="alphaMetric1">CallsPerInterval</label>
+                    </div>
+                    <div class="dropdown-item">
+                        <input class="form-check-input" type="checkbox" id="alphaMetric2" value="Alpha">
+                        <label class="form-check-label" for="alphaMetric2">MissedCalls</label>
+                    </div>
+                    <div class="dropdown-item">
+                        <input class="form-check-input" type="checkbox" id="alphaMetric3" value="Alpha">
+                        <label class="form-check-label" for="alphaMetric3">ConcurrentCalls</label>
+                    </div>
+                    <div class="dropdown-item">
+                        <input class="form-check-input" type="checkbox" id="alphaMetric3" value="Alpha">
+                        <label class="form-check-label" for="alphaMetric3">ConcurrentCallsPercentage</label>
+                    </div>
+                    <div class="dropdown-item">
+                        <input class="form-check-input" type="checkbox" id="alphaMetric3" value="Alpha">
+                        <label class="form-check-label" for="alphaMetric3">CallsBreachingConcurrencyQuota</label>
+                    </div>
+                    <div class="dropdown-item">
+                        <input class="form-check-input" type="checkbox" id="alphaMetric3" value="Alpha">
+                        <label class="form-check-label" for="alphaMetric3">CallRecordingUploadError</label>
+                    </div>
+                    <div class="dropdown-item">
+                        <input class="form-check-input" type="checkbox" id="alphaMetric3" value="Alpha">
+                        <label class="form-check-label" for="alphaMetric3">ContactFlowErrors</label>
+                    </div>
+                    <div class="dropdown-item">
+                        <input class="form-check-input" type="checkbox" id="alphaMetric3" value="Alpha">
+                        <label class="form-check-label" for="alphaMetric3">ContactFlowFatalErrors</label>
+                    </div>
+                    <div class="dropdown-item">
+                        <input class="form-check-input" type="checkbox" id="alphaMetric3" value="Alpha">
+                        <label class="form-check-label" for="alphaMetric3">ThrottledCalls</label>
+                    </div>
+                    <div class="dropdown-item">
+                        <input class="form-check-input" type="checkbox" id="alphaMetric3" value="Alpha">
+                        <label class="form-check-label" for="alphaMetric3">ToInstancePacketLossRate</label>
+                    </div>
+                   
+                </div>
+            </div> 
+            <div>
+                <button type="button" class="btn btn-secondary btn-block"  id="customDateTimeButton" onClick="submitCustomDateTimeframe()" disabled>Go</button>
+            </div>
+        </div>
+        <div class="w-100" id="dataTables">
+            <div class="row justify-content-center" id="sectionResults"><br><br>
+                <section style="text-align: center" class="row loading">
+            
+                </section>
+            </div>
+            <div class="results-container" id="results">
+                
+            </div>
+        </div>
+    </div>
+
+    
+    <!-- New Left Panel Feature -->
+    <div class="toggle-btn" onclick="toggleSidePanel()">☰</div>
+    <div class="side-panel" id="sidePanel">
+        <div class="panel-options-wrapper">
+            <div class="cdw-logo">
+                <img src="https://cskcustomer1.s3.us-east-1.amazonaws.com/cdw-2023-Red-Panel.png" alt="CDW Logo">
+            </div>
+            <!-- Accounts Section -->
+            <button class="btn btn-secondary dropdown-toggle w-100" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="awsAccountName">Accounts</button>
+            <div class="dropdown-menu">
+                <button class="dropdown-item" onclick="selectAccount(event)">MAS Sandbox Development</button>
+                <button class="dropdown-item" onclick="selectAccount(event)">MAS Sandbox Test1</button>
+                <button class="dropdown-item" onclick="selectAccount(event)">MAS Sandbox Test2</button>
+            </div>
+            <div id="connectInstances" class="w-100"></div>
+            <p id="awsConnectInstanceName" class="text-center" class=""></p>
+    
+            <button class="btn btn-primary btn-block mt-2" id="getMetricsButton" onclick="sendInstanceId(event)" disabled>Apply</button>
+    
+            <!-- Dashboards Section -->
+            <button class="btn btn-secondary btn-block mt-3" onclick="showDashboards()">Dashboards</button>
+            <!-- <i class="fas fa-plus add-icon d-flex" onclick="createNewDashboard()"></i> -->
+    
+            <!-- Alarms Section -->
+            <button class="btn btn-secondary btn-block mt-3" onclick="showAlarms()">Alarms</button>
+            <!-- <i class="fas fa-plus add-icon d-flex" onclick="createNewAlarm()" style="text-align:center"></i> -->
+        </div>
+        
+        <!-- Existing Logout Link -->
+        <a href="https://cskcustomer1.s3.us-east-1.amazonaws.com/logged_out.html" class="text-center" >Logout</a>
+    </div>
+
+    
+
+    <script>
+        
+        function accountsAndConnectInstancesObject() {
+            const allAccountsList = [
+                {
+                    "MAS Sandbox Development": {
+                        "connectInstances": {
+                            "masdevelopment": "08aaaa8c-2bbf-4571-8570-f853f6b7dba0",
+                            "masdevelopmentinstance2": "5c1408e0-cd47-4ba9-9b0c-c168752e2285"
+                        },
+                        "baseAPIGatewayURL": "https://szw9nl20j5.execute-api.us-east-1.amazonaws.com/test"
+                    }
+                },
+                {
+                    "MAS Sandbox Test1": {
+                        "connectInstances": {
+                            "mastest1instance2": "921b9e21-6d50-4365-b861-297f61227bb8",
+                            "mastest1": "cd54d26a-fee3-4645-87da-6acae50962a5"
+                        },
+                        "baseAPIGatewayURL": "https://8vauowiu26.execute-api.us-east-1.amazonaws.com/test"
+                    }
+                },
+                {
+                    "MAS Sandbox Test2": {
+                        "connectInstances": {
+                            "mastest2instance2": "d8445c54-35f2-4e65-ab0f-9c98889bdb0c",
+                            "mastest2": "ce2575a1-6ad8-4694-abd6-53acf392c698"
+                        },
+                        "baseAPIGatewayURL": "https://9v5jzdmc6a.execute-api.us-east-1.amazonaws.com/test"
+                    }
+                }
+            ]
+            return allAccountsList;
+        }
+
+        function selectAccount(event) {
+            const connectInstances = document.getElementById('connectInstances');
+            let instanceName = document.querySelector("#awsConnectInstanceName");
+            instanceName.innerHTML = "";
+            let finalAccountAndInstanceButton = document.querySelector("#getMetricsButton");
+            finalAccountAndInstanceButton.disabled = true;
+            let title = event.target.innerHTML;
+            connectInstances.innerHTML = `
+            <p class="mt-3 text-center" id="awsAccountName">${title} Instances</p>
+            <button class="btn btn-secondary dropdown-toggle w-100" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Instances</button>
+            <div class="dropdown-menu instanceList"></div>
+            `;
+            $("#selected-account").text(title);
+            let allAccountsList = accountsAndConnectInstancesObject();
+            let instanceList = document.querySelector(".instanceList");
+            for (let i = 0; i < allAccountsList.length; i ++) {
+                let accountName = Object.keys(allAccountsList[i])[0]
+                if (accountName === title) {
+                    for (let [connectInstanceName, connectInstanceId] of Object.entries(allAccountsList[i][accountName]["connectInstances"])) {
+                        let button = document.createElement("button");
+                        button.classList.add("dropdown-item");
+                        button.classList.add("connectInstance")
+                        button.innerHTML = connectInstanceName;
+                        button.dataset.instanceId = connectInstanceId;
+                        button.dataset.baseApiUrl = allAccountsList[i][accountName]["baseAPIGatewayURL"];
+                        button.addEventListener("click", selectInstance)
+                        instanceList.appendChild(button)
+                    }
+                }
+            }
+        }
+
+        
+
+        function selectInstance(event) {
+            let instanceNameSpace = document.querySelector("#awsConnectInstanceName");
+            let instanceId = event.target.dataset.instanceId
+            let apiUrl = event.target.dataset.baseApiUrl;
+            instanceNameSpace.innerHTML = event.target.innerHTML;
+            $("#selected-instance").text(event.target.innerHTML);
+            let finalAccountAndInstanceButton = document.querySelector("#getMetricsButton");
+            finalAccountAndInstanceButton.dataset.instanceId = instanceId
+            finalAccountAndInstanceButton.dataset.baseApiUrl = apiUrl
+            finalAccountAndInstanceButton.disabled = false;
+        }
+
+        function showDashboards() {
+            // window.open('/dashboard.html', '_blank');
+        }
+
+         function createNewDashboard() {
+            // Redirect to the desired URL
+            alert('Creating a new dashboard...');
+       
+        }
+
+        function showAlarms() {
+            window.open('/alarm.html', '_blank');
+        }
+
+        function createNewAlarm() {
+            alert('Creating a new alarm...');
+        }
+        window.onload = () => {
+            if (window.location.hash) {
+                let hash = window.location.hash;
+                let token = hash.split("access_token=")[1].split("&")[0];
+                sessionStorage.setItem("MetricVisionAccessToken", token)
+            }
+        }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
