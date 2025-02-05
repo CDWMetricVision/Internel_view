@@ -121,90 +121,104 @@
             <div class="cdw-logo">
                 <img src="https://cskcustomer1.s3.us-east-1.amazonaws.com/cdw-2023-Red-Panel.png" alt="CDW Logo">
             </div>
-            <button class="btn btn-secondary dropdown-toggle w-100 mt-3" type="button" id="clientsButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Clients</button>
-            <div class="dropdown-menu" aria-labelledby="clientsButton">
-                <button class="dropdown-item" onclick="selectClient('Denver')">CSK</button>
-                <button class="dropdown-item" onclick="selectClient('Tiff')">MS Cloud</button>
-            </div>
-            <!-- Accounts Section -->
-            <div id="accountsSection" style="display: none;">
-                <button class="btn btn-secondary dropdown-toggle w-100 mt-3" type="button" id="awsAccountName" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Accounts</button>
-                <div class="dropdown-menu" id="accountsDropdown">
-                    <button class="dropdown-item" onclick="selectAccount(event)">MAS Sandbox Development</button>
-                    <button class="dropdown-item" onclick="selectAccount(event)">MAS Sandbox Test1</button>
-                    <button class="dropdown-item" onclick="selectAccount(event)">MAS Sandbox Test2</button>
-                </div>
-            </div>
-            <div id="connectInstances" class="w-100"></div>
-            <p id="awsConnectInstanceName" class="text-center" class=""></p>
-    
-            <button class="btn btn-primary btn-block mt-2" id="getMetricsButton" onclick="sendInstanceId(event)" disabled>Apply</button>
-    
-            <!-- Dashboards Section -->
-            <button class="btn btn-secondary btn-block mt-3" onclick="showDashboards()">Dashboards</button>
-            <!-- <i class="fas fa-plus add-icon d-flex" onclick="createNewDashboard()"></i> -->
-    
-            <!-- Alarms Section -->
-            <button class="btn btn-secondary btn-block mt-3" onclick="showAlarms()">Alarms</button>
-            <!-- <i class="fas fa-plus add-icon d-flex" onclick="createNewAlarm()" style="text-align:center"></i> -->
-            <button class="btn btn-secondary btn-block mt-3" onclick="redirectToLogs()">Logs</button>
-        </div>
-        
-        <!-- Existing Logout Link -->
-        <a href="https://cskcustomer1.s3.us-east-1.amazonaws.com/logged_out.html" class="text-center" >Logout</a>
+            <!-- Powered by CDW Logo -->
+    <!-- Copyright and Powered by CDW -->
+    <div class="powered-by-cdw">
+        <span>© MetricVision 2025, Powered by</span>
+        <img src="https://cskcustomer1.s3.us-east-1.amazonaws.com/cdw-2023-Red-Panel.png" alt="CDW Logo">
+    </div><button class="btn btn-secondary dropdown-toggle w-100 mt-3" type="button" id="clientsButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Clients</button>
+    <div class="dropdown-menu" aria-labelledby="clientsButton">
+        <button class="dropdown-item" onclick="selectClient('Denver')">CSK</button>
+        <button class="dropdown-item" onclick="selectClient('Tiff')">MS Cloud</button>
     </div>
 
-    
+    <!-- Accounts Section -->
+    <div id="accountsSection" style="display: none;">
+        <button class="btn btn-secondary dropdown-toggle mt-3" type="button" id="awsAccountName" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Accounts</button>
+        <div class="dropdown-menu" id="accountsDropdown">
+            <button class="dropdown-item" onclick="selectAccount(event)">MAS Sandbox Development</button>
+            <button class="dropdown-item" onclick="selectAccount(event)">MAS Sandbox Test1</button>
+            <button class="dropdown-item" onclick="selectAccount(event)">MAS Sandbox Test2</button>
+        </div>
+    </div>
 
-    <script>
-        
-        function accountsAndConnectInstancesObject() {
-            const allAccountsList = [
-                {
-                    "MAS Sandbox Development": {
-                        "connectInstances": {
-                            "masdevelopment": "08aaaa8c-2bbf-4571-8570-f853f6b7dba0",
-                            "masdevelopmentinstance2": "5c1408e0-cd47-4ba9-9b0c-c168752e2285"
-                        },
-                        "baseAPIGatewayURL": "https://szw9nl20j5.execute-api.us-east-1.amazonaws.com/test"
-                    }
+    <div id="connectInstances" class="w-100"></div>
+    <p id="awsConnectInstanceName" class="text-center"></p>
+
+    <button class="btn btn-primary btn-block mt-2" id="getMetricsButton" onclick="sendInstanceId(event)" disabled>Apply</button>
+
+    <!-- Dashboards Section -->
+    <button class="btn btn-secondary btn-block mt-3" onclick="showDashboards()">Dashboards</button>
+
+    <!-- Alarms Section -->
+    <button class="btn btn-secondary btn-block mt-3" onclick="showAlarms()">Alarms</button>
+    <button class="btn btn-secondary btn-block mt-3" onclick="redirectToLogs()">Logs</button>
+
+    <!-- Existing Logout Link -->
+    <a href="https://cskcustomer1.s3.us-east-1.amazonaws.com/logged_out.html" class="text-center">Logout</a>
+</div>
+
+<script>
+    function accountsAndConnectInstancesObject() {
+    return [
+        {
+            "MAS Sandbox Development": {
+                "connectInstances": {
+                    "masdevelopment": "08aaaa8c-2bbf-4571-8570-f853f6b7dba0",
+                    "masdevelopmentinstance2": "5c1408e0-cd47-4ba9-9b0c-c168752e2285"
                 },
-                {
-                    "MAS Sandbox Test1": {
-                        "connectInstances": {
-                            "mastest1instance2": "921b9e21-6d50-4365-b861-297f61227bb8",
-                            "mastest1": "cd54d26a-fee3-4645-87da-6acae50962a5"
-                        },
-                        "baseAPIGatewayURL": "https://8vauowiu26.execute-api.us-east-1.amazonaws.com/test"
-                    }
+                "baseAPIGatewayURL": "https://szw9nl20j5.execute-api.us-east-1.amazonaws.com/test"
+            }
+        },
+        {
+            "MAS Sandbox Test1": {
+                "connectInstances": {
+                    "mastest1instance2": "921b9e21-6d50-4365-b861-297f61227bb8",
+                    "mastest1": "cd54d26a-fee3-4645-87da-6acae50962a5"
                 },
-                {
-                    "MAS Sandbox Test2": {
-                        "connectInstances": {
-                            "mastest2instance2": "d8445c54-35f2-4e65-ab0f-9c98889bdb0c",
-                            "mastest2": "ce2575a1-6ad8-4694-abd6-53acf392c698"
-                        },
-                        "baseAPIGatewayURL": "https://9v5jzdmc6a.execute-api.us-east-1.amazonaws.com/test"
-                    }
-                }
-            ]
-            return allAccountsList;
+                "baseAPIGatewayURL": "https://8vauowiu26.execute-api.us-east-1.amazonaws.com/test"
+            }
+        },
+        {
+            "MAS Sandbox Test2": {
+                "connectInstances": {
+                    "mastest2instance2": "d8445c54-35f2-4e65-ab0f-9c98889bdb0c",
+                    "mastest2": "ce2575a1-6ad8-4694-abd6-53acf392c698"
+                },
+                "baseAPIGatewayURL": "https://9v5jzdmc6a.execute-api.us-east-1.amazonaws.com/test"
+            }
         }
-        function selectClient(clientName) {
-            const accountsSection = document.getElementById("accountsSection");
-            const accountsDropdown = document.getElementById("awsAccountName");
-
-         if (clientName === "Denver") {
-        // Show and enable the Accounts dropdown
-             accountsSection.style.display = "block";
-             accountsDropdown.disabled = false;
-         } else if (clientName === "Tiff") {
-              // Hide the Accounts dropdown and redirect to a new page
-             accountsSection.style.display = "none";
-             window.location.href = "tiff.html";
-    }
-
+    ];
 }
+
+function selectClient(clientName) {
+    const accountsSection = document.getElementById("accountsSection");
+    accountsSection.style.display = "block";
+
+    if (clientName === "Tiff") {
+        populateTiffAccounts();
+    } else if (clientName === "CSK") {
+        populateCSKAccounts();
+    }
+}
+
+function populateTiffAccounts() {
+    const accountsDropdown = document.getElementById("accountsDropdown");
+    accountsDropdown.innerHTML = `
+        <button class="dropdown-item" onclick="selectAccount(event)">Tiff Account 1</button>
+        <button class="dropdown-item" onclick="selectAccount(event)">Tiff Account 2</button>
+    `;
+}
+
+function populateCSKAccounts() {
+    const accountsDropdown = document.getElementById("accountsDropdown");
+    accountsDropdown.innerHTML = `
+        <button class="dropdown-item" onclick="selectAccount(event)">MAS Sandbox Development</button>
+        <button class="dropdown-item" onclick="selectAccount(event)">MAS Sandbox Test1</button>
+        <button class="dropdown-item" onclick="selectAccount(event)">MAS Sandbox Test2</button>
+    `;
+}
+
 function selectAccount(event) {
     const connectInstances = document.getElementById('connectInstances');
     let instanceName = document.querySelector("#awsConnectInstanceName");
@@ -213,43 +227,62 @@ function selectAccount(event) {
     finalAccountAndInstanceButton.disabled = true;
     let title = event.target.innerHTML;
     connectInstances.innerHTML = `
-    <p class="mt-3 text-center" id="awsAccountName">${title} Instances</p>
-    <button class="btn btn-secondary dropdown-toggle w-100" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Instances</button>
-    <div class="dropdown-menu instanceList"></div>
+        <p class="mt-3 text-center w-100" id="awsAccountName">${title} Instances</p>
+        <button class="btn btn-secondary dropdown-toggle w-100" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Instances</button>
+        <div class="dropdown-menu instanceList"></div>
     `;
+
     $("#selected-account").text(title);
-    let allAccountsList = accountsAndConnectInstancesObject();
-    let instanceList = document.querySelector(".instanceList");
-    for (let i = 0; i < allAccountsList.length; i++) {
-        let accountName = Object.keys(allAccountsList[i])[0];
-        if (accountName === title) {
-            for (let [connectInstanceName, connectInstanceId] of Object.entries(allAccountsList[i][accountName]["connectInstances"])) {
-                let button = document.createElement("button");
-                button.classList.add("dropdown-item");
-                button.classList.add("connectInstance");
-                button.innerHTML = connectInstanceName;
-                button.dataset.instanceId = connectInstanceId;
-                button.dataset.baseApiUrl = allAccountsList[i][accountName]["baseAPIGatewayURL"];
-                button.addEventListener("click", selectInstance);
-                instanceList.appendChild(button);
+
+    const allAccountsList = accountsAndConnectInstancesObject();
+    const instanceList = document.querySelector(".instanceList");
+
+    instanceList.innerHTML = ""; // Clear previous instance list
+
+    if (title.includes("Tiff")) {
+        if (title === "Tiff Account 1") {
+            instanceList.innerHTML = `
+                <button class="dropdown-item connectInstance" onclick="selectInstance(event)" data-instance-id="tiff1-instance1">Tiff1 Instance 1</button>
+                <button class="dropdown-item connectInstance" onclick="selectInstance(event)" data-instance-id="tiff1-instance2">Tiff1 Instance 2</button>
+            `;
+        } else if (title === "Tiff Account 2") {
+            instanceList.innerHTML = `
+                <button class="dropdown-item connectInstance" onclick="selectInstance(event)" data-instance-id="tiff2-instance1">Tiff2 Instance 1</button>
+                <button class="dropdown-item connectInstance" onclick="selectInstance(event)" data-instance-id="tiff2-instance2">Tiff2 Instance 2</button>
+            `;
+        }
+    } else {
+        for (let account of allAccountsList) {
+            const accountName = Object.keys(account)[0];
+            if (accountName === title) {
+                for (let [connectInstanceName, connectInstanceId] of Object.entries(account[accountName]["connectInstances"])) {
+                    let button = document.createElement("button");
+                    button.classList.add("dropdown-item");
+                    button.classList.add("connectInstance");
+                    button.innerHTML = connectInstanceName;
+                    button.dataset.instanceId = connectInstanceId;
+                    button.dataset.baseApiUrl = account[accountName]["baseAPIGatewayURL"];
+                    button.addEventListener("click", selectInstance);
+                    instanceList.appendChild(button);
+                }
             }
         }
     }
 }
 
-        
+function selectInstance(event) {
+    let instanceNameSpace = document.querySelector("#awsConnectInstanceName");
+    let instanceId = event.target.dataset.instanceId;
+    let apiUrl = event.target.dataset.baseApiUrl;
+    instanceNameSpace.innerHTML = event.target.innerHTML;
+    $("#selected-instance").text(event.target.innerHTML);
+    let finalAccountAndInstanceButton = document.querySelector("#getMetricsButton");
+    finalAccountAndInstanceButton.dataset.instanceId = instanceId;
+    finalAccountAndInstanceButton.dataset.baseApiUrl = apiUrl;
+    finalAccountAndInstanceButton.disabled = false;
+}
 
-        function selectInstance(event) {
-            let instanceNameSpace = document.querySelector("#awsConnectInstanceName");
-            let instanceId = event.target.dataset.instanceId
-            let apiUrl = event.target.dataset.baseApiUrl;
-            instanceNameSpace.innerHTML = event.target.innerHTML;
-            $("#selected-instance").text(event.target.innerHTML);
-            let finalAccountAndInstanceButton = document.querySelector("#getMetricsButton");
-            finalAccountAndInstanceButton.dataset.instanceId = instanceId
-            finalAccountAndInstanceButton.dataset.baseApiUrl = apiUrl
-            finalAccountAndInstanceButton.disabled = false;
-        }
+
 
         function showDashboards() {
             // window.open('/dashboard.html', '_blank');
@@ -257,7 +290,7 @@ function selectAccount(event) {
 
          function createNewDashboard() {
             // Redirect to the desired URL
-            alert('Creating a new dashboard...');
+            alert('Creating a new dashboard...');   
        
         }
 
@@ -267,9 +300,6 @@ function selectAccount(event) {
 
         function createNewAlarm() {
             alert('Creating a new alarm...');
-        }
-        function redirectToLogs() {
-            window.open('/logs.html', '_blank');
         }
         window.onload = () => {
             if (window.location.hash) {
