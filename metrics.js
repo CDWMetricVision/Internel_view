@@ -44,6 +44,23 @@ async function getQueueNames() {
             }
         } else {
             let queueNames = await response.json();
+            let queueSelect = document.getElementById("queueSelect");
+            queueSelect.innerHTML = `<option value="">Select a Queue</option>`;
+            let queueMetricsOptions = document.getElementById("queueMetricsOptions");
+            queueMetricsOptions.style.display = "none";
+            queueNames.forEach(queue => {
+                const option = document.createElement("option");
+                option.value = queue;
+                option.textContent = queue;
+                queueSelect.appendChild(option);
+              });
+              queueSelect.addEventListener("change", () => {
+                if (queueSelect.value) {
+                  queueMetricsOptions.style.display = "block";
+                } else {
+                  queueMetricsOptions.style.display = "none";
+                }
+              });
             sessionStorage.setItem("queueNames", queueNames)
             return {
                 "queueNames": queueNames,
@@ -79,6 +96,23 @@ async function getContactFlowNames() {
             }
         } else {
             let contactFlowNames = await response.json();
+            let contactSelect = document.getElementById("contactSelect");
+            contactSelect.innerHTML = `<option value="">Select a Contact</option>`;
+            let contactMetricsOptions = document.getElementById("contactMetricsOptions");
+            contactMetricsOptions.style.display = 'none';
+            contactFlowNames.forEach(contact => {
+                const option = document.createElement("option");
+                option.value = contact;
+                option.textContent = contact;
+                contactSelect.appendChild(option);
+              });
+              contactSelect.addEventListener("change", () => {
+                if (contactSelect.value) {
+                  contactMetricsOptions.style.display = "block";
+                } else {
+                  contactMetricsOptions.style.display = "none";
+                }
+              });
             sessionStorage.setItem("contactFlowNames", contactFlowNames)
             return {
                 "contactFlowNames": contactFlowNames,
@@ -94,19 +128,31 @@ async function getContactFlowNames() {
     }
 }
 
-async function customTimeFetchCloudWatchData(customStartTimeandDate, customEndTimeandDate) {
+async function customTimeFetchCloudWatchData(customStartTimeandDate, customEndTimeandDate, contactFlowName, queueName, individualMetrics) {
     // let baseURL = "https://yfa9htwb2c.execute-api.us-east-1.amazonaws.com/testing/metrics";
     // let baseURL = "https://szw9nl20j5.execute-api.us-east-1.amazonaws.com/test/Any";
     let baseURL = sessionStorage.getItem("baseApiUrl");
     let customStartTimeParam = '';
     let customEndTimeParam = '';
+    let contactFlowNameParam = '';
+    let queueNameParam = '';
+    let individualMetricsParam = '';
     if (customStartTimeandDate && customEndTimeandDate) {
         customStartTimeParam = `&customStartTimeandDate=${customStartTimeandDate}`;
         customEndTimeParam = `&customEndTimeandDate=${customEndTimeandDate}`;
     }
+    if (contactFlowName) {
+        contactFlowNameParam = `&contactFlowName=${contactFlowName}`
+    }
+    if (queueName) {
+        queueNameParam = `&queueName=${queueName}`
+    }
+    if (individualMetrics) {
+        individualMetricsParam = `&individualMetrics=${individualMetrics}`
+    }
 
     let arn = await getARNQueryParams();
-    let paramURL = `${baseURL}/Any/?instanceId=${arn["instanceId"]}${customStartTimeParam}${customEndTimeParam}`;
+    let paramURL = `${baseURL}/Any/?instanceId=${arn["instanceId"]}${customStartTimeParam}${customEndTimeParam}${contactFlowNameParam}${queueNameParam}${individualMetricsParam}`;
     try {
         let token = sessionStorage.getItem("MetricVisionAccessToken");
         let response = await fetch(paramURL, {
@@ -146,7 +192,7 @@ function cleanMetricName(metricName) {
 
 async function displayMetricTableData() {
     let loadingModal = document.createElement("p");
-    loadingModal.innerHTML = "loading . . .";
+    loadingModal.innerHTML = "loading...";
     let sectionHeader = document.querySelector(".loading");
     sectionHeader.append(loadingModal);
     let data = await customTimeFetchCloudWatchData("", "");
@@ -456,12 +502,54 @@ function createTable(data, container) {
     container.appendChild(tableWrapper);
 }
 
+function selectAllConnectMetrics(event) {
+    let instanceMetricsCheckboxes = document.querySelectorAll(".instance-metrics");
+    instanceMetricsCheckboxes.forEach(checkbox => {
+        checkbox.checked = event.target.checked;
+    })
+}
+
+function chooseMetrics(event) {
+    let individualMetricsList = [];
+    let contactName = '';
+    let queueName = '';
+    let instanceMetricsCheckboxes = document.querySelectorAll(".instance-metrics");
+    let contactMetricsCheckboxes = document.querySelectorAll(".contact-metrics");
+    let contactNameDropdown = document.querySelector("#contactSelect");
+    let queueNameDropdown = document.querySelector("#queueSelect");
+    let queueMetricsCheckboxes = document.querySelectorAll(".queue-metrics");
+    instanceMetricsCheckboxes.forEach(checkbox => {
+        if (checkbox.checked) {
+            individualMetricsList.push(checkbox.id)
+        }
+    });
+    contactMetricsCheckboxes.forEach(checkbox => {
+        if (checkbox.checked) {
+            individualMetricsList.push(checkbox.id);
+            contactName = contactNameDropdown.value
+        }
+    });
+    queueMetricsCheckboxes.forEach(checkbox => {
+        if (checkbox.checked) {
+            individualMetricsList.push(checkbox.id);
+            queueName = queueNameDropdown.value;
+        }
+    })
+    let individualMetricsString = individualMetricsList.toString();
+    return {
+        "individualMetricsString": individualMetricsString,
+        "contactName": contactName,
+        "queueName": queueName
+    }
+}
+
 async function submitCustomDateTimeframe() {
     let startDate = document.querySelector("#customStartDate").value
     let endDate = document.querySelector("#customEndDate").value
     let startTime = document.querySelector("#startTime").value
     let endTime = document.querySelector("#endTime").value
     let timezoneChoice = document.querySelector("#timezoneButton").innerHTML
+    let chosenMetrics = chooseMetrics();
     let localTimezoneChoice = timezoneChoice.split(" ")[0];
     let formatterOptions = {
         year: "numeric",
@@ -490,7 +578,7 @@ async function submitCustomDateTimeframe() {
     $("#sectionResults .loading").empty();
     let sectionHeader = document.querySelector(".loading");
     sectionHeader.append(loadingModal);
-    let data = await customTimeFetchCloudWatchData(startUTC, endUTC);
+    let data = await customTimeFetchCloudWatchData(startUTC, endUTC, chosenMetrics['contactName'],chosenMetrics['queueName'],chosenMetrics['individualMetricsString']);
     // let data = JSON.parse(sessionStorage.getItem("fakeMetricVisionData"))
     if (!data.result) {
         sectionHeader.removeChild(loadingModal);
@@ -541,6 +629,11 @@ function enableCustomTimeframeButton() {
         customTimeButton.classList.remove("btn-primary")
         customTimeButton.classList.add("btn-secondary");
     }
+}
+
+function refreshDropdownChoice(event) {
+    let refreshDropdownButton = document.querySelector("#autoRefreshButton");
+    refreshDropdownButton.innerHTML = `<i class="fa-solid fa-arrows-rotate fa-lg"></i> ${event.target.innerHTML}`;
 }
 
 function displayTimeandDates() {
@@ -636,7 +729,3 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // sessionStorage.setItem("fakeMetricVisionData", JSON.stringify(completeFakeData))
   
-
-
-
-
