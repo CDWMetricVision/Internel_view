@@ -326,3 +326,38 @@ a:hover {
 .icon:hover {
     font-size: 30px
 }
+/* Powered by CDW Logo Styling */
+/* Powered by CDW Logo Styling */
+.powered-by-cdw {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Reduced gap for better alignment */
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+    padding: 5px 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1000; /* Ensure it stays on top */
+    font-size: 14px;
+    font-family: Arial, sans-serif; /* Use a clean font */
+}
+
+.powered-by-cdw img {
+    height: 20px; /* Smaller logo size */
+    width: auto;
+}
+
+.powered-by-cdw span {
+    color: #333;
+    font-weight: normal; /* Remove bold if desired */
+}
+
+#clientsButton, #awsAccountName {
+    display: block;
+    width: 100%;
+    
+#accountsDropdown {
+        min-width: 300px; /* Set your desired width */
+}
