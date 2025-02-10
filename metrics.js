@@ -37,10 +37,26 @@ async function getQueueNames() {
             }
         })
         if (!response.ok) {
-            console.log(response)
+            if (response.status === 401) {
+
+                let modalEl = document.querySelector("#signInAgainModal");
+
+                let modal = new bootstrap.Modal(modalEl);
+
+                modal.show();
+
+            }
+
+            let failedResponse = await response.json();
+
             return {
-                "errorMessage": response,
+
+                "errorMessage": failedResponse,
+
+                "response": response,
+
                 "result": false
+
             }
         } else {
             let queueNames = await response.json();
@@ -89,10 +105,26 @@ async function getContactFlowNames() {
             }
         })
         if (!response.ok) {
-            console.log(response)
+            if (response.status === 401) {
+
+                let modalEl = document.querySelector("#signInAgainModal");
+
+                let modal = new bootstrap.Modal(modalEl);
+
+                modal.show();
+
+            }
+
+            let failedResponse = await response.json();
+
             return {
-                "errorMessage": response,
+
+                "errorMessage": failedResponse,
+
+                "response": response,
+
                 "result": false
+
             }
         } else {
             let contactFlowNames = await response.json();
@@ -170,10 +202,26 @@ async function customTimeFetchCloudWatchData(customStartTimeandDate, customEndTi
             }
         })
         if (!response.ok) {
-            console.log(response)
+           if (response.status === 401) {
+
+                let modalEl = document.querySelector("#signInAgainModal");
+
+                let modal = new bootstrap.Modal(modalEl);
+
+                modal.show();
+
+            }
+
+            let failedResponse = await response.json();
+
             return {
-                "errorMessage": response,
+
+                "errorMessage": failedResponse,
+
+                "response": response,
+
                 "result": false
+
             }
         } else {
             let cloudWatchData = await response.json();
