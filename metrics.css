@@ -364,14 +364,21 @@ a:hover {
 }
 
 .custom-box {
-    border: 2px solid #e74c3c;
+    border: 2px solid #ffffff;
     border-radius: 15px;
-    padding: 15px;
-    background-color: #ff0000;
+    background-color: #ff4d4d; /* Red background */
+    padding: 20px;
     margin-top: 15px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.custom-box .btn {
-    margin-top: 8px;
+.custom-box .btn,
+.custom-box .dropdown-menu {
+    margin-top: 10px;
+}
+
+button.btn-block:not(.excluded),
+.custom-box button {
+    display: block;
+    width: 100%;
 }
