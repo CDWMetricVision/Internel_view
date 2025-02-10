@@ -367,18 +367,13 @@ a:hover {
     border: 2px solid #ffffff;
     border-radius: 15px;
     background-color: #ff4d4d; /* Red background */
-    padding: 20px;
+    padding: 15px;
+    width: 100%; /* Full width like other buttons */
+    box-sizing: border-box;
     margin-top: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.custom-box .btn,
-.custom-box .dropdown-menu {
-    margin-top: 10px;
-}
-
-button.btn-block:not(.excluded),
 .custom-box button {
-    display: block;
-    width: 100%;
+    width: 100%; /* Ensure buttons inside fit within the box */
+    margin-top: 10px;
 }
