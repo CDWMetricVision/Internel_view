@@ -216,7 +216,6 @@
                 <button class="dropdown-item" onclick="selectClient('Tiff')">MS Cloud</button>
             </div>
 
-            <!-- Accounts Section -->
             <div id="accountsSection" class="w-100" style="display: none;">
                 <button class="btn btn-secondary dropdown-toggle mt-3" type="button" id="awsAccountName" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Accounts</button>
                 <div class="dropdown-menu" id="accountsDropdown">
@@ -231,15 +230,16 @@
             <button class="btn btn-primary btn-block mt-2" id="getMetricsButton" onclick="sendInstanceId(event)" disabled>Apply</button>
         </div>
 
-        <!-- Excluded Buttons -->
-        <button class="btn btn-secondary btn-block mt-3" onclick="showDashboards()">Dashboards</button>
-        <button class="btn btn-secondary btn-block mt-3" onclick="showAlarms()">Alarms</button>
-        <button class="btn btn-secondary btn-block mt-3" onclick="redirectToLogs()">Logs</button>
+        <!-- Buttons with Red Background -->
+        <button class="btn btn-dashboard mt-3" onclick="showDashboards()">Dashboards</button>
+        <button class="btn btn-dashboard mt-3" onclick="showAlarms()">Alarms</button>
+        <button class="btn btn-dashboard mt-3" onclick="redirectToLogs()">Logs</button>
 
-       
+        
     </div>
         <a href="https://cskcustomer1.s3.us-east-1.amazonaws.com/logged_out.html" class="text-center">Logout</a>
 </div>
+
 
     
    
