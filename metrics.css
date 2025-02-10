@@ -377,3 +377,17 @@ a:hover {
     width: 100%; /* Ensure buttons inside fit within the box */
     margin-top: 10px;
 }
+.btn-dashboard {
+    background-color: #ff4d4d; /* Same red as the box */
+    color: white;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-dashboard:hover {
+    background-color: #e60000;
+    color: white;
+}
