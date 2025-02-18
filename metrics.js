@@ -191,18 +191,6 @@ function toggleDarkMode() {
   document.getElementsByTagName("body")[0].classList.toggle("dark-mode");
 }
 
-
-
-// --------------------------
-// --------------------------
-// --------------------------
-// --------------------------
-// --------------------------
-// --------------------------
-// --------------------------
-// --------------------------
-
-
 async function getARNQueryParams() {
   let queryString = window.location.search;
   let urlParams = new URLSearchParams(queryString);
