@@ -10,11 +10,22 @@
     <script src="https://cdn.anychart.com/releases/8.13.0/js/anychart-core.min.js"></script>
     <script src="https://cdn.anychart.com/releases/8.13.0/js/anychart-circular-gauge.min.js"></script>
     <script src="app.js"></script>
-    <script src="alarm.js"></script>
-    <title>Alarm Page</title>
+    <script src="dashboard.js"></script>
+    <title>Dashboard Page</title>
 </head>
 <body>
-    <!-- Navigation bar -->
+    <!-- Existing Content -->
+    <div id="loader" style="display: none;">
+        <div class="spinner"></div>
+        <p>Loading...</p>
+    </div>
+    <!-- <header class="dashboard-header">
+         <div class="cdw-logo">
+             <img src="https://cskcustomer1.s3.us-east-1.amazonaws.com/cdw-2023-Red.png" alt="CDW Logo">
+         </div>
+         <p class="title">Dashboards</p>
+         <a href="https://cskcustomer1.s3.us-east-1.amazonaws.com/logged_out.html" class="text-center" >Logout</a>
+     </header> -->
     <nav class="navigation-bar">
         <div class="navigation-wrapper">
             <div class="navigation-left-content">
@@ -22,8 +33,8 @@
                     <img src="https://cskcustomer1.s3.us-east-1.amazonaws.com/cdw-2023-Red-Panel.png" alt="CDW Logo">
                 </div>
                 <div class="nav-links" onclick="showMetrics()">Metrics</div>
-                <div class="nav-links" onclick="showDashboards()">Dashboards</div>
-                <div class="nav-links active">Alarms</div>
+                <div class="nav-links active">Dashboards</div>
+                <div class="nav-links" onclick="showAlarms()">Alarms</div>
                 <div class="nav-links" onclick="showLogs()">Logs</div>
             </div>
             <div class="navigation-right-content">
@@ -40,58 +51,33 @@
             </div>
         </div>
     </nav>
-    
-
-    <!-- Existing Content -->
-     <br>
-     <br>
-     <br>
-     <br>
-     <br>
-     <br>
-
-    <div class="d-flex">
-        <label for="customerAccounts" class="mt-2">Accounts : </label>
-        <select id="customerAccounts" class="p-2 cursor-pointer" onchange="customerAccountChange(event)">
-            <option disabled selected hidden>--Select--</option>
-            <option value="MAS Sandbox Development">MAS Sandbox Development</option>
-            <option value="MAS Sandbox Test1">MAS Sandbox Test1</option>
-            <option value="MAS Sandbox Test2">MAS Sandbox Test2</option>
-        </select>
-    </div>
-
-    <div class="d-flex ml-4">
-        <label for="alarmState" class="mt-2">State : </label>
-        <select id="alarmState" class="p-2 cursor-pointer" onchange="filterByState(event)">
-            <option value="">--Select State--</option>
-            <option value="ok">OK</option>
-            <option value="alarm">Alarm</option>
-            <option value="INSUFFICIENT_DATA">INSUFFICIENT_DATA</option>
-        </select>
-    </div>
-
-        <div class="w-100" id="dataTables">
-            <div class="alarms-container" id="alarmsList">
-                <table></table>
+    <div class="main-container-wrapper">
+        <div class="d-flex flex-wrap alarm-options-wrapper">
+            <div class="d-flex">
+                <label for="customerAccounts" class="mt-2">Accounts : </label>
+                <select id="customerAccounts" class="p-2 cursor-pointer" onchange="customerAccountChange(event)">
+                    <option disabled selected hidden>--Select--</option>
+                    <option value="MAS Sandbox Development">MAS Sandbox Development</option>
+                    <option value="MAS Sandbox Test1">MAS Sandbox Test1</option>
+                    <option value="MAS Sandbox Test2">MAS Sandbox Test2</option>
+                </select>
             </div>
+            <!-- <div>
+                <button type="button" class="btn btn-secondary btn-block"  id="getAlarmsData" onClick="getAlarmsData()" disabled>Go</button>
+            </div> -->
+            <div>
+                <button type="button" class="btn btn-secondary btn-block"  id="saveDashboards" onClick="getSavedDashboards()" disabled>Get Saved Dashboards</button>
+            </div>
+            <div>
+                <button type="button" class="btn btn-secondary btn-block"  id="createDashboards" onClick="createDashboards()" disabled>Create Dashboards</button>
+            </div>
+        </div>
+        <div class="chartContainer" style="display: none;">
         </div>
     </div>
 
-    <!-- Copyright and Powered by CDW -->
-    <div class="powered-by-cdw">
-        <span>© MetricVision 2025, Powered by</span>
-        <img src="https://cskcustomer1.s3.us-east-1.amazonaws.com/cdw-2023-Red-Panel.png" alt="CDW Logo">
-    </div>
     
-    <script>
-         window.onload = () => {
-            if (window.location.hash) {
-                let hash = window.location.hash;
-                let token = hash.split("access_token=")[1].split("&")[0];
-                sessionStorage.setItem("MetricVisionAccessToken", token)
-            }
-        }
-    </script>
+    
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
