@@ -60,18 +60,22 @@ function selectClient(clientName) {
   const accountsSection = document.getElementById("accountsSection");
   accountsSection.style.display = "block";
 
-  if (clientName === "Tiff") {
-    populateTiffAccounts();
+  if (clientName === "MScloud") {
+    populateMScloudAccounts();
   } else if (clientName === "CSK") {
     populateCSKAccounts();
   }
 }
 
-function populateTiffAccounts() {
+function removeSelection() {
+    const accountsDropdown = document.getElementById("accountsDropdown").removeChild();
+}
+
+function populateMScloudAccounts() {
   const accountsDropdown = document.getElementById("accountsDropdown");
   accountsDropdown.innerHTML = `
-        <button class="dropdown-item" onclick="selectAccount(event)">Tiff Account 1</button>
-        <button class="dropdown-item" onclick="selectAccount(event)">Tiff Account 2</button>
+        <button class="dropdown-item" onclick="selectAccount(event)">MScloud Account 1</button>
+        <button class="dropdown-item" onclick="selectAccount(event)">MScloud Account 2</button>
     `;
 }
 
@@ -105,16 +109,16 @@ function selectAccount(event) {
 
   instanceList.innerHTML = ""; // Clear previous instance list
 
-  if (title.includes("Tiff")) {
-    if (title === "Tiff Account 1") {
+  if (title.includes("MScloud")) {
+    if (title === "MScloud Account 1") {
       instanceList.innerHTML = `
-                <button class="dropdown-item connectInstance" onclick="selectInstance(event)" data-instance-id="tiff1-instance1">Tiff1 Instance 1</button>
-                <button class="dropdown-item connectInstance" onclick="selectInstance(event)" data-instance-id="tiff1-instance2">Tiff1 Instance 2</button>
+                <button class="dropdown-item connectInstance" onclick="selectInstance(event)" data-instance-id="MScloud1-instance1">MScloud1 Instance 1</button>
+                <button class="dropdown-item connectInstance" onclick="selectInstance(event)" data-instance-id="MScloud1-instance2">MScloud1 Instance 2</button>
             `;
-    } else if (title === "Tiff Account 2") {
+    } else if (title === "MScloud Account 2") {
       instanceList.innerHTML = `
-                <button class="dropdown-item connectInstance" onclick="selectInstance(event)" data-instance-id="tiff2-instance1">Tiff2 Instance 1</button>
-                <button class="dropdown-item connectInstance" onclick="selectInstance(event)" data-instance-id="tiff2-instance2">Tiff2 Instance 2</button>
+                <button class="dropdown-item connectInstance" onclick="selectInstance(event)" data-instance-id="MScloud2-instance1">MScloud2 Instance 1</button>
+                <button class="dropdown-item connectInstance" onclick="selectInstance(event)" data-instance-id="MScloud2-instance2">MScloud2 Instance 2</button>
             `;
     }
   } else {
@@ -149,38 +153,6 @@ function selectInstance(event) {
   finalAccountAndInstanceButton.dataset.instanceId = instanceId;
   finalAccountAndInstanceButton.dataset.baseApiUrl = apiUrl;
   finalAccountAndInstanceButton.disabled = false;
-}
-
-// function showDashboards() {
-//   // window.open('/dashboard.html', '_blank');
-// }
-
-// function showAlarms() {
-//   window.open("/alarm.html", "_blank");
-// }
-
-// function createNewAlarm() {
-//   alert("Creating a new alarm...");
-// }
-
-function showDashboards() {
-  window.location.href = "./dashboard.html";
-}
-
-function showMetrics() {
-  window.location.href = "./metrics.html";
-}
-
-function showAlarms() {
-  // Get the access token from sessionStorage
-  let accessToken = sessionStorage.getItem("MetricVisionAccessToken");
-
-  if (accessToken) {
-    // Open the alarms page with the access token added in the URL as a query parameter
-    window.location.href = `/alarm.html?access_token=${accessToken}`;
-  } else {
-    alert("Access token not found. Please sign in again.");
-  }
 }
 
 function createNewAlarm() {

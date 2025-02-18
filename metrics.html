@@ -20,6 +20,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
+  <script src="app.js"></script>
   <script src="metrics.js"></script>
   <title>Customer Home Page</title>
 </head>
@@ -34,6 +35,7 @@
         <div class="nav-links active">Metrics</div>
         <div class="nav-links" onclick="showDashboards()">Dashboards</div>
         <div class="nav-links" onclick="showAlarms()">Alarms</div>
+        <div class="nav-links" onclick="showLogs()">Logs</div>
       </div>
       <div class="navigation-right-content">
         <!-- Existing Logout Link -->
@@ -57,8 +59,8 @@
       <button class="btn btn-secondary dropdown-toggle w-100 mt-3" type="button" id="clientsButton" data-toggle="dropdown"
         aria-haspopup="true" aria-expanded="false">Clients</button>
       <div class="dropdown-menu" aria-labelledby="clientsButton">
-        <button class="dropdown-item" onclick="selectClient('Denver')">CSK</button>
-        <button class="dropdown-item" onclick="selectClient('Tiff')">MS Cloud</button>
+        <button class="dropdown-item" onclick="selectClient('CSK')">CSK</button>
+        <button class="dropdown-item" onclick="selectClient('MScloud')">MS Cloud</button>
       </div>
     
       <div id="accountsSection" class="w-100" style="display: none;">
