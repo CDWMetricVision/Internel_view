@@ -36,6 +36,7 @@
     --button-background: #007bff; /* Blue */
     --button-text: #ffffff;      /* White */
     --nav-background: var(--clr-primary-a50);
+    --nav-button-bg: var(--clr-surface-tonal-a50);
 }
 
 /* Dark Mode Styles */
@@ -45,6 +46,7 @@ body.dark-mode {
   --button-background: #0056b3;
   --button-text: #ffffff;
   --nav-background: var(--clr-surface-a40);
+  --nav-button-bg: var(--clr-surface-tonal-a0);
 }
 
 body {
@@ -837,3 +839,18 @@ input:checked + .slider:before {
         transform: rotate(360deg);
     }
 } 
+
+.aws-btn {
+    background: var(--clr-surface-tonal-a50);
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
+.aws-btn:hover {
+    background: var(--clr-surface-tonal-a20);
+}
+
+.aws-btn a {
+    margin: 0;
+    color: var(--clr-light-a0);
+}

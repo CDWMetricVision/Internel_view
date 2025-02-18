@@ -540,6 +540,7 @@ function createIcons() {
   editBtn.classList.add("edit-btn");
   editBtn.addEventListener("click", handleEditBtn);
   const container = document.querySelector("#chart-edit-container");
+  container.innerHTML = "";
   container.append(chartIcon, tableIcon, gaugeIcon, selectWrapper, editBtn);
 }
 
@@ -584,7 +585,10 @@ function showGauges() {
   hideEveryMetrics();
   const tableCharts = document.querySelectorAll(".guage-metric");
   tableCharts.forEach((chart) =>
-    chart.setAttribute("style", "display: block !important")
+    chart.setAttribute(
+      "style",
+      "display: grid !important; grid-template-columns: 1fr 1fr 1fr 1fr"
+    )
   );
 }
 
