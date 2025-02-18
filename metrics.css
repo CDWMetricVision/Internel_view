@@ -811,7 +811,8 @@ input:checked + .slider:before {
 }
 
 .periodWrapper {
-    background: var(--clr-light-a0);
+    background: var(--background-color);
+    color: var(--text-color);
 }
 
 .periodWrapper > label {
@@ -820,7 +821,8 @@ input:checked + .slider:before {
 
 .edit-btn {
     padding: 5px 10px;
-    color: black;
+    background-color: var(--background-color);
+    color: var(--text-color);
 }
 
 .dark-mode .edit-btn {
