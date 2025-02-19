@@ -97,7 +97,7 @@ function selectAccount(event) {
   finalAccountAndInstanceButton.disabled = true;
   let title = event.target.innerHTML;
   connectInstances.innerHTML = `
-        <p class="mt-3 text-center w-100" id="awsAccountName">${title} Instances</p>
+        <p class="mt-3 text-center w-100" id="awsAccountName">${title}</p>
         <button class="btn btn-secondary dropdown-toggle w-100" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Instances</button>
         <div class="dropdown-menu instanceList"></div>
     `;
