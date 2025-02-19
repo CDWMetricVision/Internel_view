@@ -861,3 +861,154 @@ input:checked + .slider:before {
     background-color: var(--background-color);
     color: var(--text-color);
 }
+
+.container-row {
+    width:80%;
+}
+
+.input-wrapper {
+    width: 100%;
+}
+
+.input-wrapper>label{
+    min-width: 100px;
+    width: 120px;
+    max-width: 150px;
+}
+
+/* Navigation bar styles */
+.navigation-bar {
+    width: 100%;
+    background: var(--nav-background);
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.navigation-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.navigation-left-content,
+.navigation-right-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+}
+
+.navigation-left-content .cdw-logo {
+    width: 100%;
+    height: 50px;
+    margin: 0.5rem 1rem;
+}
+
+.nav-links {
+    cursor: pointer;
+    margin: 0 2px;
+    padding: 0.75rem 1rem;
+    border-radius: 5px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.nav-links:hover {
+    background-color: #fbfeffc9;
+    color: var(--clr-dark-a);
+    /* background-color: var(--nav-background); */
+}
+
+.navigation-wrapper .active {
+    background: #ffffffb5;
+    color: var(--clr-dark-a);
+    border-radius: 0;
+}
+
+/* Dark mode styles */
+.dark-mode {
+    background: var(--background-color);
+    color: var(--text-color);
+}
+
+.dark-mode .togglee-btn {
+    background-color: #444;
+    color: #ffffff;
+}
+
+.toggle-container2 {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    background-color: #444;
+    padding: 4px;
+    border-radius: 30px;
+    width: 55px;
+    transition: background-color 0.3s ease;
+}
+
+.dark-mode .toggle-container2 {
+    background-color: #ccc;
+}
+
+.toggle-btn2 {
+    width: 25px;
+    height: 25px;
+    background-color: #202123;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.dark-mode .toggle-btn2 {
+    transform: translateX(25px);
+    background-color: #fff;
+    color: #202123;
+}
+
+/* Styles for chart edit icons */
+.chart-edit-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chart-edit-container i {
+    padding: 0.25rem;
+}
+
+.periodWrapper {
+    background: var(--background-color);
+    color: var(--text-color);
+}
+
+.periodWrapper > label {
+    margin: 0;
+}
+
+.edit-btn {
+    padding: 5px 10px;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.dark-mode .edit-btn {
+    color: var(--clr-light-a0);
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+} 
