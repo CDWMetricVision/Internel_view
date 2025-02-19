@@ -532,10 +532,12 @@ input[name='accountName']{
     display: flex;
     align-items: center;
     gap: 5px; /* Reduced gap for better alignment */
-    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+    /* Semi-transparent background */
+    /* background-color: rgba(255, 255, 255, 0.8);  */
+    background-color: var(--background-color);
     padding: 5px 10px;
     border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 5px var(--text-color);
     z-index: 1000; /* Ensure it stays on top */
     font-size: 14px;
     font-family: Arial, sans-serif; /* Use a clean font */
@@ -853,4 +855,9 @@ input:checked + .slider:before {
 .aws-btn a {
     margin: 0;
     color: var(--clr-light-a0);
+}
+
+.table-responsive * {
+    background-color: var(--background-color);
+    color: var(--text-color);
 }
