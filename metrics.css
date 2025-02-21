@@ -10,11 +10,11 @@
     /* https://colorffy.com/dark-theme-generator?colors=abc0f3-121212 */
 
     /** Base colors */
-    --clr-dark-a: #000000;
+    --clr-dark-a: #292b2d;
     --clr-light-a0: #ffffff;
 
     /** Dark theme primary colors */
-    --clr-primary-a0: #abc0f3;
+    --clr-primary-a0: #cc0000;
     --clr-primary-a10: #b5c7f4;
     --clr-primary-a20: #becef6;
     --clr-primary-a30: #c8d5f7;
@@ -39,11 +39,12 @@
 
     /* CSS Variables for Light Mode (Default) */
     --background-color: #ffffff;  /* White */
-    --text-color: #000000;      /* Black */
-    --button-background: #007bff; /* Blue */
+    --nav-button-bg: #b9bbbe;
+    --text-color: #292b2d;      /* Black */
+    --button-background: #898a8e; /* Blue */
     --button-text: #ffffff;      /* White */
-    --nav-background: var(--clr-primary-a50);
-    --nav-button-bg: var(--clr-surface-tonal-a50);
+    --nav-background: #eeee;
+    --button-background-hover: #b8b8bb;
 }
 
 /* Dark Mode Styles */
@@ -89,28 +90,28 @@ body {
 #timezoneButton,
 #chosenMetrics,
 #autoRefreshButton {
-    background-color: #f8c8dc !important;
+     background-color: var(--background-color) !important;
     /* Pale pink */
-    border-color: #f8c8dc !important;
+    border-color: var(--text-color) !important;
     /* Match border color */
-    color: #000 !important;
+    color: var(--text-color) !important;
     /* Ensure text is readable */
 }
 
 #timezoneButton:hover,
 #chosenMetrics:hover,
 #autoRefreshButton:hover {
-    background-color: #f4a6c0 !important;
+    /* background-color: var(button-background-hover) !important; */
     /* Slightly darker pink on hover */
-    border-color: #f4a6c0 !important;
+    border-color: var(--text-color) !important;
 }
 
 /* GO Button - Pale Wine Color */
 /* GO Button - Pale Wine Color with Bold & Highlighted Look */
 #customDateTimeButton {
-    background-color: #7b506f !important;
+    background-color: var(--clr-primary-a0) !important;
     /* Pale wine */
-    border-color: #7b506f !important;
+    /* border-color: #7b506f !important; */
     color: #fff !important;
     /* White text */
     font-size: 18px;
@@ -119,17 +120,17 @@ body {
     padding: 10px;
     width: 150px;
     height: 45px;
-    box-shadow: 0px 0px 10px rgba(123, 80, 111, 0.8);
+    box-shadow: 0px 0px 5px var(--clr-primary-a0);
     /* Highlight effect */
     text-transform: uppercase;
     /* Makes 'GO' more prominent */
 }
 
 #customDateTimeButton:hover {
-    background-color: #5e3b54 !important;
+    background-color: #660000 !important;
     /* Darker wine on hover */
-    border-color: #5e3b54 !important;
-    box-shadow: 0px 0px 15px rgba(94, 59, 84, 1);
+    border-color: #660000 !important;
+    box-shadow: 0px 0px 10px rgba(94, 59, 84, 1);
     /* Stronger glow on hover */
 }
 
@@ -543,7 +544,7 @@ input[name='accountName']{
     font-weight: normal; /* Remove bold if desired */
 }
 
-#clientsButton, #awsAccountName {
+#awsClients, #awsAccountName {
     display: block;
     width: 100%;
 }
@@ -694,13 +695,15 @@ input:checked + .slider:before {
     min-width: 100px;
     width: 100px;
     max-width: 150px;
+    text-align: right;
 }
 
 .input-wrapper > input{
     padding: 5px;
     width: 200px;
-    height: 30px;
-    font-size: small;
+    height: 38px;
+    font-size: medium;
+    border: 1px solid var(--text-color);
 }
 
 /* Navigation bar styles */
@@ -748,6 +751,7 @@ input:checked + .slider:before {
     height: 100%;
     display: flex;
     align-items: center;
+    color: var(--clr-dark-a);
 }
 
 .nav-links:hover {
@@ -760,6 +764,7 @@ input:checked + .slider:before {
     background: #ffffffb5;
     color: var(--clr-dark-a);
     border-radius: 0;
+    border-bottom: 3px solid var(--clr-primary-a0)
 }
 
 /* Dark mode styles */
@@ -811,6 +816,7 @@ input:checked + .slider:before {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: 1rem;
 }
 
 .chart-edit-container i {
@@ -869,16 +875,6 @@ input:checked + .slider:before {
     width:80%;
 }
 
-.input-wrapper {
-    width: 100%;
-}
-
-.input-wrapper>label{
-    min-width: 100px;
-    width: 120px;
-    max-width: 150px;
-}
-
 /* Navigation bar styles */
 .navigation-bar {
     width: 100%;
@@ -1009,3 +1005,14 @@ input:checked + .slider:before {
         transform: rotate(360deg);
     }
 } 
+
+.drp-btn {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    border: 1px solid var(--text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 250px;
+    height: 38px;
+}

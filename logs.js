@@ -174,6 +174,7 @@ async function getLogs() {
     } else {
       response = await response.json();
       let logs = JSON.parse(response.body);
+      document.querySelector("#log-groups tbody").innerHTML="";
       populateLogs(logs);
     }
   } catch (err) {
