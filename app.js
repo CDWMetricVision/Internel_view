@@ -24,4 +24,11 @@ function showLogs() {
 
 function toggleDarkMode() {
   document.getElementsByTagName("body")[0].classList.toggle("dark-mode");
+  const toggleBtn = document.querySelector(".toggle-btn2");
+
+  if (document.body.classList.contains("dark-mode")) {
+      toggleBtn.innerHTML = "☀️"; // Switch to sun
+  } else {
+      toggleBtn.innerHTML = "🌙"; // Switch to moon
+  }
 }
