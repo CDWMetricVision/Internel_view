@@ -16,9 +16,11 @@ document.addEventListener("DOMContentLoaded", () => {
   displayTimeandDates();
 });
 
-function toggleSidePanel() {
-  const sidePanel = document.getElementById("sidePanel");
-  sidePanel.classList.toggle("active");
+function showLoader() {
+  document.querySelector("#loader").setAttribute("style", "display: flex");
+}
+function hideLoader() {
+  document.querySelector("#loader").setAttribute("style", "display: none");
 }
 
 function accountsAndConnectInstancesObject() {
@@ -92,9 +94,6 @@ function selectAccount(event) {
   const connectInstances = document.getElementById("connectInstances");
   let instanceName = document.querySelector("#awsConnectInstanceName");
   instanceName.innerHTML = "";
-  let finalAccountAndInstanceButton =
-    document.querySelector("#getMetricsButton");
-  finalAccountAndInstanceButton.disabled = true;
   let title = event.target.innerHTML;
   connectInstances.innerHTML = `
         <p class="mt-3 text-center w-100" id="awsAccountName">${title}</p>
@@ -148,26 +147,7 @@ function selectInstance(event) {
   let apiUrl = event.target.dataset.baseApiUrl;
   instanceNameSpace.innerHTML = event.target.innerHTML;
   $("#selected-instance").text(event.target.innerHTML);
-  let finalAccountAndInstanceButton =
-    document.querySelector("#getMetricsButton");
-  finalAccountAndInstanceButton.dataset.instanceId = instanceId;
-  finalAccountAndInstanceButton.dataset.baseApiUrl = apiUrl;
-  finalAccountAndInstanceButton.disabled = false;
-}
-
-function createNewAlarm() {
-  alert("Creating a new alarm...");
-}
-
-function toggleDarkMode() {
-            document.body.classList.toggle("dark-mode");
-            const toggleBtn = document.querySelector(".toggle-btn2");
-
-            if (document.body.classList.contains("dark-mode")) {
-                toggleBtn.innerHTML = "☀️"; // Switch to sun
-            } else {
-                toggleBtn.innerHTML = "🌙"; // Switch to moon
-            }
+  sendInstanceId(apiUrl, instanceId);
 }
 
 async function getARNQueryParams() {
@@ -179,23 +159,28 @@ async function getARNQueryParams() {
   };
 }
 
-function sendInstanceId(event) {
-  $("#results").empty();
-  $("#sectionResults .loading").empty();
-  let baseApiUrl = event.target.dataset.baseApiUrl;
-  sessionStorage.setItem("baseApiUrl", baseApiUrl);
-  let instanceId = event.target.dataset.instanceId;
-  let url = new URL(window.location.href);
-  url.searchParams.set("instanceId", instanceId);
-  window.history.replaceState({}, "", url);
-  getContactFlowNames();
-  getQueueNames();
+async function sendInstanceId(baseApiUrl, instanceId) {
+  showLoader();
+  try {
+    $("#results").empty();
+    $("#sectionResults .loading").empty();
+    sessionStorage.setItem("baseApiUrl", baseApiUrl);
+    let url = new URL(window.location.href);
+    url.searchParams.set("instanceId", instanceId);
+    window.history.replaceState({}, "", url);
+    await getContactFlowNames(baseApiUrl, instanceId);
+    await getQueueNames(baseApiUrl, instanceId);
+  } catch (err) {
+    console.log("error in getting the instance", err);
+  } finally {
+    hideLoader();
+  }
 }
 
-async function getQueueNames() {
-  let baseURL = sessionStorage.getItem("baseApiUrl");
-  let instanceId = await getARNQueryParams();
-  let paramURL = `${baseURL}/queues/?instanceId=${instanceId["instanceId"]}`;
+async function getQueueNames(baseApiUrl, instanceId) {
+  let baseURL = baseApiUrl;
+  console.log("instanceid", instanceId);
+  let paramURL = `${baseURL}/queues/?instanceId=${instanceId}`;
   try {
     let token = sessionStorage.getItem("MetricVisionAccessToken");
     let response = await fetch(paramURL, {
@@ -250,10 +235,10 @@ async function getQueueNames() {
   }
 }
 
-async function getContactFlowNames() {
-  let baseURL = sessionStorage.getItem("baseApiUrl");
-  let instanceId = await getARNQueryParams();
-  let paramURL = `${baseURL}/contactFlows/?instanceId=${instanceId["instanceId"]}`;
+async function getContactFlowNames(baseApiUrl, instanceId) {
+  let baseURL = baseApiUrl;
+  console.log("instanceId", instanceId);
+  let paramURL = `${baseURL}/contactFlows/?instanceId=${instanceId}`;
   try {
     let token = sessionStorage.getItem("MetricVisionAccessToken");
     let response = await fetch(paramURL, {
@@ -264,9 +249,7 @@ async function getContactFlowNames() {
     });
     if (!response.ok) {
       if (response.status === 401) {
-        let modalEl = document.querySelector("#signInAgainModal");
-        let modal = new bootstrap.Modal(modalEl);
-        modal.show();
+        alert("Authentication failed, Please login again!");
       }
       let failedResponse = await response.json();
       return {
