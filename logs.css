@@ -1,0 +1,93 @@
+:root {
+
+    /* https://colorffy.com/dark-theme-generator?colors=abc0f3-121212 */
+
+    /** Base colors */
+    --clr-dark-a: #000000;
+    --clr-light-a0: #ffffff;
+
+    /** Dark theme primary colors */
+    --clr-primary-a0: #abc0f3;
+    --clr-primary-a10: #b5c7f4;
+    --clr-primary-a20: #becef6;
+    --clr-primary-a30: #c8d5f7;
+    --clr-primary-a40: #d1dcf9;
+    --clr-primary-a50: #dae3fa;
+
+    /** Dark theme surface colors */
+    --clr-surface-a0: #121212;
+    --clr-surface-a10: #282828;
+    --clr-surface-a20: #3f3f3f;
+    --clr-surface-a30: #575757;
+    --clr-surface-a40: #717171;
+    --clr-surface-a50: #8b8b8b;
+
+    /** Dark theme tonal surface colors */
+    --clr-surface-tonal-a0: #2d3038;
+    --clr-surface-tonal-a10: #41444b;
+    --clr-surface-tonal-a20: #565960;
+    --clr-surface-tonal-a30: #6c6e74;
+    --clr-surface-tonal-a40: #83858a;
+    --clr-surface-tonal-a50: #9b9ca0;
+
+    /* CSS Variables for Light Mode (Default) */
+    --background-color: #ffffff;  /* White */
+    --text-color: #000000;      /* Black */
+    --button-background: #007bff; /* Blue */
+    --button-text: #ffffff;      /* White */
+    --nav-background: var(--clr-primary-a50);
+    --nav-button-bg: var(--clr-surface-tonal-a50);
+    --ligh-bg-color: var(--clr-surface-a50);
+    --border-dark: var(--clr-dark-a);
+}
+
+/* Dark Mode Styles */
+body.dark-mode {
+  --background-color: var(--clr-dark-a); /* Dark Gray */
+  --text-color: #ffffff;      /* White */
+  --button-background: #0056b3;
+  --button-text: #ffffff;
+  --nav-background: var(--clr-surface-a40);
+  --nav-button-bg: var(--clr-surface-tonal-a0);
+  --ligh-bg-color: var(--clr-surface-tonal-a30);
+  --border-dark: var(--clr-light-a0);
+}
+
+.log-groups-wrapper {
+    width: 100%;
+    padding: 1rem;
+}
+
+.accordian-wrapper {
+    background-color: var(--ligh-bg-color);
+    padding: 1rem;
+    margin: 1rem 0;
+    border: 1px solid var(--border-dark);
+    border-radius: 5px;
+}
+
+.accordian-wrapper:hover,
+.default-header:hover {
+    cursor: pointer;
+}
+
+.livelogs-content,
+.streams-content {
+    background-color: var(--clr-light-a0);
+    border: 2px solid var(--clr-dark-a);
+    color: var(--clr-dark-a);
+    padding: 1rem;
+}
+
+th, td {
+  text-align: left;
+  vertical-align: middle;
+}
+
+.text-log-group {
+    color: var(--text-color);
+}
+
+code {
+  white-space: pre-wrap;
+}

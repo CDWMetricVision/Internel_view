@@ -21,3 +21,7 @@ function showAlarms() {
 function showLogs() {
     window.location.href = "./logs.html";
 }
+
+function toggleDarkMode() {
+  document.getElementsByTagName("body")[0].classList.toggle("dark-mode");
+}

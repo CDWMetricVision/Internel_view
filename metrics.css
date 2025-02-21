@@ -658,7 +658,7 @@ input:checked + .slider:before {
     transform: translateX(14px);
 }
 #loader {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
@@ -669,6 +669,7 @@ input:checked + .slider:before {
     align-items: center;
     flex-direction: column;
     z-index: 1000; /* Ensure it's on top of other content */
+    cursor: wait;
 }
 #loader p {
     margin-top: 10px;
