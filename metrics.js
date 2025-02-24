@@ -76,8 +76,7 @@ function removeSelection() {
 function populateMScloudAccounts() {
   const accountsDropdown = document.getElementById("accountsDropdown");
   accountsDropdown.innerHTML = `
-        <button class="dropdown-item" onclick="selectAccount(event)">MScloud Account 1</button>
-        <button class="dropdown-item" onclick="selectAccount(event)">MScloud Account 2</button>
+        <button class="dropdown-item" onclick="selectAccount(event)">CDW Cloud MS</button>
     `;
 }
 
