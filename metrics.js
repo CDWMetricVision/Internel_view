@@ -23,6 +23,13 @@ function hideLoader() {
   document.querySelector("#loader").setAttribute("style", "display: none");
 }
 
+function clientToAccountMapping() {
+  return {
+    "CSK": ["MAS Sandbox Development", "MAS Sandbox Test1", "MAS Sandbox Test2"],
+    "MScloud": ["CDW Cloud MS"],
+  };
+}
+
 function accountsAndConnectInstancesObject() {
   return [
     {
@@ -55,6 +62,15 @@ function accountsAndConnectInstancesObject() {
           "https://9v5jzdmc6a.execute-api.us-east-1.amazonaws.com/test",
       },
     },
+    {
+      "CDW Cloud MS": {
+        connectInstances: {
+          cdwcloudms: "81929398-ea15-429d-8259-a85d54c05e9b",
+          cdwcloudsolutioncentre: "4c2a8892-8b0d-415d-84a5-9cadeba8c67a"
+        },
+        baseAPIGatewayURL: "https://a37xf754ya.execute-api.us-east-1.amazonaws.com/csccloud"
+      }
+    }
   ];
 }
 
@@ -63,31 +79,17 @@ function selectClient(clientName) {
   accountsSection.style.display = "block";
   document.querySelector("#awsClients").textContent=clientName;
 
-  if (clientName === "MScloud") {
-    populateMScloudAccounts();
-  } else if (clientName === "CSK") {
-    populateCSKAccounts();
+  populateAccounts(clientName)
+}
+
+function populateAccounts(client) {
+  const accountsDropdown = document.getElementById("accountsDropdown");
+  let dropdowns = '';
+  const accounts = clientToAccountMapping()[client];
+  if(accounts.length) {
+    accounts.forEach(accountName => {dropdowns += `<button class="dropdown-item" onclick="selectAccount(event)">${accountName}</button>`});
   }
-}
-
-function removeSelection() {
-    const accountsDropdown = document.getElementById("accountsDropdown").removeChild();
-}
-
-function populateMScloudAccounts() {
-  const accountsDropdown = document.getElementById("accountsDropdown");
-  accountsDropdown.innerHTML = `
-        <button class="dropdown-item" onclick="selectAccount(event)">CDW Cloud MS</button>
-    `;
-}
-
-function populateCSKAccounts() {
-  const accountsDropdown = document.getElementById("accountsDropdown");
-  accountsDropdown.innerHTML = `
-        <button class="dropdown-item" onclick="selectAccount(event)">MAS Sandbox Development</button>
-        <button class="dropdown-item" onclick="selectAccount(event)">MAS Sandbox Test1</button>
-        <button class="dropdown-item" onclick="selectAccount(event)">MAS Sandbox Test2</button>
-    `;
+  accountsDropdown.innerHTML = dropdowns;
 }
 
 function selectAccount(event) {
@@ -1261,41 +1263,4 @@ function localDateToUTC(rawDateInput, rawTimeInput) {
   let [hours, minutes] = rawTimeInput.split(":");
   let UTCDate = new Date(year, month, day, hours, minutes).toISOString();
   return UTCDate;
-}
-
-
-function accountsAndConnectInstancesObject() {
-  const allAccountsList = [
-    {
-      "MAS Sandbox Development": {
-        connectInstances: {
-          masdevelopment: "08aaaa8c-2bbf-4571-8570-f853f6b7dba0",
-          masdevelopmentinstance2: "5c1408e0-cd47-4ba9-9b0c-c168752e2285",
-        },
-        baseAPIGatewayURL:
-          "https://szw9nl20j5.execute-api.us-east-1.amazonaws.com/test",
-      },
-    },
-    {
-      "MAS Sandbox Test1": {
-        connectInstances: {
-          mastest1instance2: "921b9e21-6d50-4365-b861-297f61227bb8",
-          mastest1: "cd54d26a-fee3-4645-87da-6acae50962a5",
-        },
-        baseAPIGatewayURL:
-          "https://8vauowiu26.execute-api.us-east-1.amazonaws.com/test",
-      },
-    },
-    {
-      "MAS Sandbox Test2": {
-        connectInstances: {
-          mastest2instance2: "d8445c54-35f2-4e65-ab0f-9c98889bdb0c",
-          mastest2: "ce2575a1-6ad8-4694-abd6-53acf392c698",
-        },
-        baseAPIGatewayURL:
-          "https://9v5jzdmc6a.execute-api.us-east-1.amazonaws.com/test",
-      },
-    },
-  ];
-  return allAccountsList;
 }
