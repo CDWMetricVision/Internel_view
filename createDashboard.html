@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="metrics.css">
+    <script src="https://kit.fontawesome.com/2a56506141.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.anychart.com/releases/8.13.0/js/anychart-base.min.js" type="text/javascript"></script>
+    <script src="https://cdn.anychart.com/releases/8.13.0/js/anychart-core.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/8.13.0/js/anychart-circular-gauge.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="dashboard.js"></script>
+    <script src="createDashboard.js"></script>
+    <title>Create Dashboard</title>
+</head>
+<body>
+    <div id="loader" style="display: none;">
+        <div class="spinner"></div>
+        <p>Loading...</p>
+    </div>
+    <nav class="navigation-bar">
+        <div class="navigation-wrapper">
+            <div class="navigation-left-content">
+                <div class="cdw-logo">
+                    <img src="./images/logo.svg" alt="CDW Logo">
+                </div>
+                <div class="nav-links" onclick="showMetrics()">Metrics</div>
+                <div class="nav-links active">Dashboards</div>
+                <div class="nav-links" onclick="showAlarms()">Alarms</div>
+            </div>
+            <div class="navigation-right-content">
+                <!-- Existing Logout Link -->
+                <div>
+                    <div class="toggle-container2" onclick="toggleDarkMode()">
+                        <div class="toggle-btn2">🌙</div>
+                    </div>
+                </div>
+                <div>
+                    <a class="nav-links" href="https://cskcustomer1.s3.us-east-1.amazonaws.com/logged_out.html"
+                        class="text-center">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="filteration-container">
+        <div class="accounts-options-wrapper instances-content-container">
+            <!-- Accounts Section -->
+            <div id="connectInstances" class="w-100"></div>
+            <p id="awsConnectInstanceName" class="text-center" class=""></p>
+        </div>
+        <div class="filter-content-wrapper">
+            <!-- Metrics Dropdown -->
+            <div class="d-flex justify-content-start input-wrapper metrics-dropdown">
+                <label class="mr-1" style="font-size: 16px; font-weight: bold;">Metrics</label>
+                <div class="dropdown">
+                    <button class="btn btn-info dropdown-toggle" type="button" id="chosenMetrics"
+                        style="padding: 5px;width: 250px;height: 38px;" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        Select
+                    </button>
+                    <ul class="dropdown-menu allMetrics" aria-labelledby="chosenMetrics">
+                        <!-- Instance Metrics -->
+                        <li class="dropdown-item">
+                            <div class="form-check" id="selectAllMetrics">
+                                <input class="form-check-input" type="checkbox" id="instanceMetricsAll"
+                                    onchange="selectAllConnectMetrics(event)">
+                                <label class="form-check-label font-weight-bold" for="instanceMetricsAll">Instance
+                                    Metrics - Select All</label>
+                            </div>
+                            <div class="nested-menu">
+                                <div class="form-check">
+                                    <input class="form-check-input instance-metrics" type="checkbox"
+                                        id="calls_per_interval">
+                                    <label class="form-check-label" for="calls_per_interval">Calls Per Interval</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input instance-metrics" type="checkbox" id="missed_calls">
+                                    <label class="form-check-label" for="missed_calls">Missed Calls</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input instance-metrics" type="checkbox"
+                                        id="concurrent_calls">
+                                    <label class="form-check-label" for="concurrent_calls">Concurrent Calls</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input instance-metrics" type="checkbox"
+                                        id="concurrent_calls_percentage">
+                                    <label class="form-check-label" for="concurrent_calls_percentage">Concurrent Calls
+                                        Percentage</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input instance-metrics" type="checkbox"
+                                        id="calls_breaching_concurrency_quota">
+                                    <label class="form-check-label" for="calls_breaching_concurrency_quota">Calls
+                                        Breaching Concurrency Quota</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input instance-metrics" type="checkbox"
+                                        id="call_recording_upload_error">
+                                    <label class="form-check-label" for="call_recording_upload_error">Call Recording
+                                        Upload Error</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input instance-metrics" type="checkbox"
+                                        id="throttled_calls">
+                                    <label class="form-check-label" for="throttled_calls">Throttled Calls</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input instance-metrics" type="checkbox"
+                                        id="to_instance_packet_loss_rate">
+                                    <label class="form-check-label" for="to_instance_packet_loss_rate">To Instance
+                                        Packet Loss Rate</label>
+                                </div>
+                            </div>
+                        </li>
+                        <hr>
+                        <!-- Dynamic Contact Metrics -->
+                        <li class="dropdown-item">
+                            <label class="font-weight-bold">Contact Metrics</label>
+                            <select class="form-control" id="contactSelect">
+                                <option value="">Select a Contact</option>
+                            </select>
+                            <div id="contactMetricsOptions" class="nested-menu mt-2" style="display: none;">
+                                <div class="form-check">
+                                    <input class="form-check-input contact-metrics" type="checkbox"
+                                        id="contact_flow_errors">
+                                    <label class="form-check-label" for="contact_flow_errors">Contact Flow
+                                        Errors</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input contact-metrics" type="checkbox"
+                                        id="contact_flow_fatal_errors">
+                                    <label class="form-check-label" for="contact_flow_fatal_errors">Contact Flow Fatal
+                                        Errors</label>
+                                </div>
+                            </div>
+                        </li>
+                        <hr>
+                        <!-- Dynamic Queue Metrics -->
+                        <li class="dropdown-item">
+                            <label class="font-weight-bold">Queue Metrics</label>
+                            <select class="form-control" id="queueSelect">
+                                <option value="">Select a Queue</option>
+                            </select>
+                            <div id="queueMetricsOptions" class="nested-menu mt-2" style="display: none;">
+                                <div class="form-check">
+                                    <input class="form-check-input queue-metrics" type="checkbox"
+                                        id="longest_queue_wait_time">
+                                    <label class="form-check-label" for="longest_queue_wait_time">Longest Queue Wait
+                                        Time</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input queue-metrics" type="checkbox"
+                                        id="queue_capacity_exceeded_error">
+                                    <label class="form-check-label" for="queue_capacity_exceeded_error">Queue Capacity
+                                        Exceeded Error</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input queue-metrics" type="checkbox" id="queue_size">
+                                    <label class="form-check-label" for="queue_size">Queue Size</label>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Timezone Dropdown -->
+            <div class="d-flex justify-content-start input-wrapper timezone-dropdown">
+                <label class="mr-1" style="font-size: 16px; font-weight: bold;">Timezone</label>
+                <div class="dropdown">
+                    <button class="btn btn-info dropdown-toggle" type="button" id="timezoneButton"
+                        style="padding: 5px;width: 250px;height: 38px;" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        Select
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="timezoneButton">
+                        <button class="dropdown-item" type="button" onclick="timezoneDropdownChoice(event)">UTC
+                            Timezone</button>
+                        <button class="dropdown-item" type="button" onclick="timezoneDropdownChoice(event)">Local
+                            Timezone</button>
+                        <button class="dropdown-item" type="button" onclick="timezoneDropdownChoice(event)">Hawaii
+                            Time</button>
+                        <button class="dropdown-item" type="button" onclick="timezoneDropdownChoice(event)">Alaska
+                            Time</button>
+                        <button class="dropdown-item" type="button" onclick="timezoneDropdownChoice(event)">Pacific
+                            Time</button>
+                        <button class="dropdown-item" type="button" onclick="timezoneDropdownChoice(event)">Mountain
+                            Time</button>
+                        <button class="dropdown-item" type="button" onclick="timezoneDropdownChoice(event)">Central
+                            Time</button>
+                        <button class="dropdown-item" type="button" onclick="timezoneDropdownChoice(event)">Eastern
+                            Time</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Refreesh Dropdown -->
+            <div class="d-flex justify-content-start input-wrapper">
+                <label class="mr-1" style="font-size: 16px; font-weight: bold;">Widgets</label>
+                <div class="dropdown">
+                    <button class="btn btn-info dropdown-toggle" type="button" id="widgetSelection"
+                        style="padding: 5px;width: 250px;height: 38px;" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        Select
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="widgetSelection">
+                        <button class="dropdown-item" type="button" data-value="Line" onclick="handleWidgetSelection(event)">Line</button>
+                        <button class="dropdown-item" type="button" data-value="NumberChart" onclick="handleWidgetSelection(event)">Number Chart</button>
+                        <button class="dropdown-item" type="button" data-value="Gauge" onclick="handleWidgetSelection(event)">Gauge</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="filter-content-wrapper-2">
+            <div class="d-flex justify-content-start input-wrapper">
+                <label for="customStartDate" style="font-size: 16px; font-weight: bold;">Start Date</label>
+                <input type="date" id="customStartDate"
+                    style="font-size: 16px; padding: 5px; width: 220px; height: 30px;">
+            </div>
+
+            <div class="d-flex justify-content-start input-wrapper">
+                <label for="startTime" style="font-size: 16px; font-weight: bold;">Start Time</label>
+                <input type="time" id="startTime" style="font-size: 16px; padding: 10px; width: 220px; height: 40px;">
+            </div>
+            <div class="d-flex justify-content-start input-wrapper">
+                <label for="customEndDate" style="font-size: 16px; font-weight: bold;">End Date</label>
+                <input type="date" id="customEndDate"
+                    style="font-size: 16px; padding: 10px; width: 220px; height: 40px;">
+            </div>
+            <div class="d-flex justify-content-start input-wrapper">
+                <label for="endTime" style="font-size: 16px; font-weight: bold;">End Time</label>
+                <input type="time" id="endTime" style="font-size: 16px; padding: 10px; width: 220px; height: 40px;">
+            </div>
+        </div>
+    </div>
+    <button type="button" class="btn" id="getWidgets" onclick="getWidgets()">
+        GO
+    </button>
+    <div id="metricsInput"></div>
+    <div>
+        <div class="d-flex flex-wrap create-options-wrapper">
+            <div class="d-flex">
+                <label for="accountName" class="mt-2">Dashboard Name: </label>
+                <input type="text" id="accountName" name="accountName" class="h-10">
+            </div>
+            <div>
+                <button type="button" class="btn btn-secondary btn-block" id="saveDashboards" onClick="saveDashboards()"><i class="fa-solid fa-floppy-disk"></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="chartContainer" style="display: none;">
+    </div>
+</body>
+</html>
