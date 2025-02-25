@@ -60,35 +60,34 @@
   <div class="filteration-container">
     <!-- Unique Box Fitting the Panel -->
     <div class="accounts-options-wrapper">
-      <button class="btn btn-secondary dropdown-toggle w-100 mt-3" type="button" id="clientsButton" data-toggle="dropdown"
-        aria-haspopup="true" aria-expanded="false">Clients</button>
-      <div class="dropdown-menu" aria-labelledby="clientsButton">
-        <button class="dropdown-item" onclick="selectClient('CSK')">CSK</button>
-        <button class="dropdown-item" onclick="selectClient('MScloud')">MS Cloud</button>
+      <div class="drp-input d-flex justify-content-end" id="clientsSection">
+        <label class="mr-1" for="awsClients">Clients</label>
+        <button style="width: 250px;" class="dropdown-toggle drp-btn" type="button" id="awsClients" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">Select</button>
+        <div class="dropdown-menu" aria-labelledby="clientsButton">
+          <button class="dropdown-item" onclick="selectClient('CSK')">CSK</button>
+          <button class="dropdown-item" onclick="selectClient('MScloud')">MS Cloud</button>
+        </div>
       </div>
-    
-      <div id="accountsSection" class="w-100" style="display: none;">
-        <button class="btn btn-secondary dropdown-toggle mt-3" type="button" id="awsAccountName" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">Accounts</button>
+      <div class="drp-input d-flex justify-content-end" id="accountsSection" style="display: none;">
+        <label class="mr-1" for="awsAccountName">Accounts</label>
+        <button style="width: 250px;" class="dropdown-toggle drp-btn" type="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false" id="awsAccountName">Select</button>
         <div class="dropdown-menu" id="accountsDropdown">
           <button class="dropdown-item" onclick="selectAccount(event)">MAS Sandbox Development</button>
           <button class="dropdown-item" onclick="selectAccount(event)">MAS Sandbox Test1</button>
           <button class="dropdown-item" onclick="selectAccount(event)">MAS Sandbox Test2</button>
         </div>
       </div>
-    
       <div id="connectInstances" class="w-100"></div>
-      <p id="awsConnectInstanceName" class="text-center"></p>
-      <!-- <button class="btn btn-primary btn-block mt-2" id="getMetricsButton" onclick="sendInstanceId(event)"
-        disabled>Apply</button> -->
     </div>
     <div class="filter-content-wrapper">
       <!-- Metrics Dropdown -->
       <div class="d-flex justify-content-start input-wrapper metrics-dropdown">
-        <label class="mr-1" style="font-size: 16px; font-weight: bold;">Metrics</label>
+        <label class="mr-1" for="chosenMetrics">Metrics</label>
         <div class="dropdown">
           <button class="btn btn-info dropdown-toggle" type="button" id="chosenMetrics"
-            style="font-size: 16px; padding: 5px; width: 330px; height: 38px;" data-toggle="dropdown"
+            style="padding: 5px; width: 250px; height: 38px;" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
             Select
           </button>
@@ -223,9 +222,9 @@
             </li>
             <hr>
             <!-- Dynamic Contact Metrics -->
-            <li class="dropdown-item">
+            <li class="dropdown-item w-100">
               <label class="font-weight-bold">Contact Metrics</label>
-              <select class="form-control" id="contactSelect">
+              <select class="form-control w-100" id="contactSelect">
                 <option value="">Select a Contact</option>
               </select>
               <div id="contactMetricsOptions" class="nested-menu mt-2" style="display: none;">
@@ -243,9 +242,9 @@
             </li>
             <hr>
             <!-- Dynamic Queue Metrics -->
-            <li class="dropdown-item">
+            <li class="dropdown-item w-100">
               <label class="font-weight-bold">Queue Metrics</label>
-              <select class="form-control" id="queueSelect">
+              <select class="form-control w-100" id="queueSelect">
                 <option value="">Select a Queue</option>
               </select>
               <div id="queueMetricsOptions" class="nested-menu mt-2" style="display: none;">
@@ -270,10 +269,10 @@
       </div>
       <!-- Timezone Dropdown -->
       <div class="d-flex justify-content-start input-wrapper timezone-dropdown">
-        <label class="mr-1" style="font-size: 16px; font-weight: bold;">Timezone</label>
+        <label class="mr-1">Timezone</label>
         <div class="dropdown">
           <button class="btn btn-info dropdown-toggle" type="button" id="timezoneButton"
-            style="font-size: 16px; padding: 5px; width: 330px; height: 38px;" data-toggle="dropdown"
+            style="padding: 5px; width: 250px; height: 38px;" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
             Select
           </button>
@@ -299,10 +298,10 @@
       </div>
       <!-- Refreesh Dropdown -->
       <div class="d-flex justify-content-start input-wrapper">
-        <label class="mr-1" style="font-size: 16px; font-weight: bold;">Auto Refresh</label>
+        <label class="mr-1">Auto Refresh</label>
         <div class="dropdown">
           <button class="btn btn-info dropdown-toggle" type="button" id="autoRefreshButton"
-            style="font-size: 16px; padding: 5px; width: 330px; height: 38px;" data-toggle="dropdown"
+            style="padding: 5px; width: 250px; height: 38px;" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
             Off
           </button>
@@ -330,21 +329,21 @@
     </div>
     <div class="filter-content-wrapper-2">
       <div class="d-flex justify-content-start input-wrapper">
-        <label for="customStartDate" style="font-size: 16px; font-weight: bold;">Start Date</label>
-        <input type="date" id="customStartDate" style="font-size: 16px; padding: 5px; width: 220px; height: 30px;">
+        <label for="customStartDate">Start Date</label>
+        <input type="date" id="customStartDate" />
       </div>
 
       <div class="d-flex justify-content-start input-wrapper">
-        <label for="startTime" style="font-size: 16px; font-weight: bold;">Start Time</label>
-        <input type="time" id="startTime" style="font-size: 16px; padding: 10px; width: 220px; height: 30px;">
+        <label for="startTime">Start Time</label>
+        <input type="time" id="startTime" />
       </div>
       <div class="d-flex justify-content-start input-wrapper">
-        <label for="customEndDate" style="font-size: 16px; font-weight: bold;">End Date</label>
-        <input type="date" id="customEndDate" style="font-size: 16px; padding: 10px; width: 220px; height: 30px;">
+        <label for="customEndDate">End Date</label>
+        <input type="date" id="customEndDate" />
       </div>
       <div class="d-flex justify-content-start input-wrapper">
-        <label for="endTime" style="font-size: 16px; font-weight: bold;">End Time</label>
-        <input type="time" id="endTime" style="font-size: 16px; padding: 10px; width: 220px; height: 30px;">
+        <label for="endTime">End Time</label>
+        <input type="time" id="endTime" />
       </div>
     </div>
   </div>
@@ -359,8 +358,8 @@
   <div class="chart-edit-container" id="chart-edit-container"></div>
   <div id="metricsInput"></div>
   <div class="dataTables" id="dataTables">
-    <div class="row justify-content-center" id="sectionResults">
-      <section style="text-align: center" class="row loading"></section>
+    <div class="w-100 justify-content-center" id="sectionResults">
+      <section style="text-align: center" class="row justify-content-center loading"></section>
     </div>
     <div class="results-container" id="results"></div>
   </div>
