@@ -56,6 +56,7 @@ function populateMScloudAccounts() {
   removeSelection();
   const accountsDropdown = document.getElementById("accountsDropdown");
   accountsDropdown.innerHTML = `
+        <option disabled selected hidden>--Select--</option>
         <option value="MScloud Account 1">MScloud Account 1</option>
         <option value="MScloud Account 2">MScloud Account 2</option>
     `;
@@ -65,6 +66,7 @@ function populateCSKAccounts() {
   removeSelection();
   const accountsDropdown = document.getElementById("accountsDropdown");
   accountsDropdown.innerHTML = `
+        <option disabled selected hidden>--Select--</option>
         <option value="MAS Sandbox Development">MAS Sandbox Development</option>
         <option value="MAS Sandbox Test1">MAS Sandbox Test1</option>
         <option value="MAS Sandbox Test2">MAS Sandbox Test2</option>
