@@ -58,17 +58,16 @@ body.dark-mode {
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: var(--background-color);
     margin: 0;
     padding: 0;
-    color: #f75115;
     display: flex;
     align-items: center;
     flex-direction: column;
     min-height: 100vh;
     background-size: cover;
     background-position: center;
+    color: var(--text-color);
 }
 
 .togglee-btn {
@@ -150,14 +149,6 @@ body {
 .logout-button:hover {
     background-color: #c0392b;
     transform: scale(1.05);
-}
-
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    color: #333;
-    margin: 0;
-    padding: 0;
 }
 
 .container {
@@ -826,6 +817,9 @@ input:checked + .slider:before {
 .periodWrapper {
     background: var(--background-color);
     color: var(--text-color);
+    border: 1px solid var(--text-color);
+    padding: 5px 5px 5px 0;
+    border-radius: 5px;
 }
 
 .periodWrapper > label {
@@ -1015,4 +1009,17 @@ input:checked + .slider:before {
     text-overflow: ellipsis;
     width: 250px;
     height: 38px;
+}
+
+.chart-interval, select {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    padding: 5px;
+    border-radius: 5px;
+    margin-left: 5px;
+    border: 1px solid var(--text-color);
+}
+
+.line-chart {
+    height: 250px;
 }

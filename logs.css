@@ -3,11 +3,11 @@
     /* https://colorffy.com/dark-theme-generator?colors=abc0f3-121212 */
 
     /** Base colors */
-    --clr-dark-a: #000000;
+    --clr-dark-a: #292b2d;
     --clr-light-a0: #ffffff;
 
     /** Dark theme primary colors */
-    --clr-primary-a0: #abc0f3;
+    --clr-primary-a0: #cc0000;
     --clr-primary-a10: #b5c7f4;
     --clr-primary-a20: #becef6;
     --clr-primary-a30: #c8d5f7;
@@ -32,13 +32,12 @@
 
     /* CSS Variables for Light Mode (Default) */
     --background-color: #ffffff;  /* White */
-    --text-color: #000000;      /* Black */
-    --button-background: #007bff; /* Blue */
+    --nav-button-bg: #b9bbbe;
+    --text-color: #292b2d;      /* Black */
+    --button-background: #898a8e; /* Blue */
     --button-text: #ffffff;      /* White */
-    --nav-background: var(--clr-primary-a50);
-    --nav-button-bg: var(--clr-surface-tonal-a50);
-    --ligh-bg-color: var(--clr-surface-a50);
-    --border-dark: var(--clr-dark-a);
+    --nav-background: #eeee;
+    --button-background-hover: #b8b8bb;
 }
 
 /* Dark Mode Styles */

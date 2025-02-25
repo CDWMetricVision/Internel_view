@@ -455,11 +455,11 @@ function createIcons() {
   let selectWrapper = document.createElement("div");
   selectWrapper.classList.add("periodWrapper");
   let label = document.createElement("label");
-  label.innerHTML = "Interval: ";
+  label.innerHTML = '<i class="fa-solid fa-arrows-rotate fa-xl icon"></i>';
 
   let select = document.createElement("select");
+  select.classList.add("chart-interval");
   select.addEventListener("change", handlePeriodChange);
-  select.setAttribute("disabled", true);
   let defaultOption = document.createElement("option");
   defaultOption.textContent = "Select";
   defaultOption.value = "";
@@ -521,13 +521,9 @@ function createIcons() {
     select.appendChild(option);
   });
   selectWrapper.append(label, select);
-  let editBtn = document.createElement("button");
-  editBtn.innerHTML = "Edit";
-  editBtn.classList.add("edit-btn");
-  editBtn.addEventListener("click", handleEditBtn);
   const container = document.querySelector("#chart-edit-container");
   container.innerHTML = "";
-  container.append(chartIcon, tableIcon, gaugeIcon, selectWrapper, editBtn);
+  container.append(chartIcon, tableIcon, gaugeIcon, selectWrapper);
 }
 
 function hideTables() {
@@ -669,13 +665,6 @@ async function handlePeriodChange(e) {
       createTableLineGauge(data.data.MetricDataResults[i]);
     }
     createIcons();
-  }
-}
-
-function handleEditBtn(e) {
-  const select = document.querySelector(".periodWrapper select");
-  if (select) {
-    select.removeAttribute("disabled");
   }
 }
 
@@ -1064,11 +1053,14 @@ async function submitCustomDateTimeframe() {
     }
     createIcons();
   }
+  document
+    .getElementById("customDateTimeButton")
+    .scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 function refreshDropdownChoice(event) {
   let refreshDropdownButton = document.querySelector("#autoRefreshButton");
-  refreshDropdownButton.innerHTML = `<i class="fa-solid fa-arrows-rotate fa-lg"></i> ${event.target.innerHTML}`;
+  refreshDropdownButton.innerHTML = `${event.target.innerHTML}`;
   if (refreshDropdownButton.dataset.intervalId) {
     clearInterval(refreshDropdownButton.dataset.intervalId);
     refreshDropdownButton.dataset.intervalId = "";
