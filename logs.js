@@ -76,6 +76,8 @@ function customerAccountChange(event) {
   let selectdAccount = event.target.value;
   if(selectdAccount && getLogsApi()[selectdAccount]) {
     selectedLogApi = getLogsApi()[selectdAccount];
+  } else {
+    selectedLogApi = "";
   }
 }
 
@@ -163,7 +165,7 @@ async function getLogs() {
 
   try {
     let token = sessionStorage.getItem("MetricVisionAccessToken");
-    if(!selectedLogApi.length()) {
+    if(!selectedLogApi.length) {
       alert("Please select the account!");
       hideLoader();
       return;
