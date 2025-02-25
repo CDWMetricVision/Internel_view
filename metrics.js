@@ -643,7 +643,7 @@ async function handlePeriodChange(e) {
   let timezoneChoice = document.querySelector("#timezoneButton").innerHTML;
   let localTimezoneChoice = timezoneChoice.split(" ")[0];
   let formatterOptions = {
-    year: "numeric",
+    year: "2-digit",
     month: "2-digit",
     day: "2-digit",
     hour: "2-digit",
@@ -697,7 +697,7 @@ async function handlePeriodChange(e) {
     for (let i = 0; i < metricDataResults; i++) {
       createTableLineGauge(data.data.MetricDataResults[i]);
     }
-    createIcons();
+    //createIcons();
   }
 }
 
@@ -863,10 +863,30 @@ function createLineGraphNew(data, container) {
       chartMetricData.push(chartData);
     }
   }
+  const metricUnitConversion = {
+        "Calls": ["calls_per_interval","missed_calls","concurrent_calls","calls_breaching_concurrency_quota","call_recording_upload_error", "queue_capacity_exceeded_error", "throttled_calls", "calls_transferred_to_agent"],
+        "Percentage": ["concurrent_calls_percentage", "to_instance_packet_loss_rate", "forecast_accuracy", "schedule_adherence", "concurrent_tasks_percentage", "concurrent_emails_percentage", "concurrent_active_chats_percentage"],
+        "Errors": ["contact_flow_errors", "contact_flow_fatal_errors"],
+        "Seconds": ["longest_queue_wait_time", "api_latency"],
+        "Contacts": ["queue_size"],
+        "Score": ["contact_lens_sentiment"],
+        "Count": ["api_request_count", "api_error_count"],
+        "Usage": ["wisdom_knowledge_article_usage"],
+        "Suggestions": ["wisdom_assist_suggestions"],
+        "Tasks": ["tasks_expiry_warning_reached", "tasks_expired", "tasks_breaching_concurrency_quota", "concurrent_tasks"],
+        "Chats": ["successful_chats_per_interval", "concurrent_active_chats", "chats_breaching_active_chat_quota"],
+        "Emails": ["concurrent_emails"]
+    }
+    let yAxisTitle;
+    for (const [key,values] of Object.entries(metricUnitConversion)) {
+        if (values.includes(metric)) {
+            yAxisTitle = key
+        }
+    }
   let graphData = {
     title: metric,
     xAxis: "Interval",
-    yAxis: metric,
+    yAxis: yAxisTitle,
     data: chartMetricData,
   };
   chartLineGraph(graphData, container);
@@ -876,10 +896,25 @@ function chartLineGraph(graphData, container) {
   let { title, xAxis, yAxis, data } = graphData;
   let chart = anychart.line();
   chart.data(data);
-  chart.title(cleanMetricName(title));
+  let chartTitle = chart.title();
+    chartTitle.enabled(true);
+    chartTitle.useHtml(true);
+    chartTitle.text(`<b>${cleanMetricName(title)}</b>`)
+
+    //Floating Tooltip
+    if (data.length > 0) {
+        let tooltip = chart.getSeries(0).tooltip();
+        if (yAxis === "Percentage") {
+            tooltip.format("{%value}%");
+        } else {
+            tooltip.format("{%value}");
+        }
+
+    }
 
   // Step 5: Customize axes
-  chart.xAxis().title(xAxis);
+  //chart.xAxis().title(xAxis);
+  chart.yAxis().title(yAxis);
 
   let flexDiv = document.createElement("section");
   flexDiv.classList.add("flex-grow-1");
@@ -1016,7 +1051,7 @@ async function submitCustomDateTimeframe() {
   }
   let localTimezoneChoice = timezoneChoice.split(" ")[0];
   let formatterOptions = {
-    year: "numeric",
+    year: "2-digit",
     month: "2-digit",
     day: "2-digit",
     hour: "2-digit",
@@ -1146,7 +1181,7 @@ function refreshDropdownChoice(event) {
     let chosenMetrics = chooseMetrics();
     let localTimezoneChoice = timezoneChoice.split(" ")[0];
     let formatterOptions = {
-      year: "numeric",
+      year: "2-digit",
       month: "2-digit",
       day: "2-digit",
       hour: "2-digit",
