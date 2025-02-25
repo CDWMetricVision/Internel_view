@@ -349,7 +349,8 @@ a:hover {
 
 .accounts-options-wrapper,
 .filter-content-wrapper,
-.filter-content-wrapper-2 {
+.filter-content-wrapper-2,
+.filter-content-wrapper-3 {
     padding: 1rem;
     width: fit-content;
 }
@@ -684,7 +685,6 @@ input:checked + .slider:before {
 
 .input-wrapper>label{
     min-width: 100px;
-    width: 100px;
     max-width: 150px;
     text-align: right;
 }
@@ -695,6 +695,10 @@ input:checked + .slider:before {
     height: 38px;
     font-size: medium;
     border: 1px solid var(--text-color);
+}
+
+.autorefresh {
+    
 }
 
 /* Navigation bar styles */
@@ -817,7 +821,6 @@ input:checked + .slider:before {
 .periodWrapper {
     background: var(--background-color);
     color: var(--text-color);
-    border: 1px solid var(--text-color);
     padding: 5px 5px 5px 0;
     border-radius: 5px;
 }

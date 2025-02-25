@@ -457,7 +457,7 @@ function createIcons() {
   let selectWrapper = document.createElement("div");
   selectWrapper.classList.add("periodWrapper");
   let label = document.createElement("label");
-  label.innerHTML = '<i class="fa-solid fa-arrows-rotate fa-xl icon"></i>';
+  label.innerHTML = 'Interval : ';
 
   let select = document.createElement("select");
   select.classList.add("chart-interval");
@@ -468,6 +468,37 @@ function createIcons() {
   defaultOption.selected = true;
   defaultOption.disabled = true;
   select.appendChild(defaultOption);
+  let autoRefresh = document.createElement("div");
+  autoRefresh.innerHTML = `
+      <div class="d-flex justify-content-start input-wrapper autorefresh">
+        <label class="mr-1">Auto Refresh</label>
+        <div class="dropdown">
+          <button class="btn btn-info dropdown-toggle" type="button" id="autoRefreshButton"
+            style="padding: 5px; width: 150px; height: 38px;" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Off
+          </button>
+          <div class="dropdown-menu" aria-labelledby="autoRefreshButton">
+            <button class="dropdown-item" type="button" onclick="refreshDropdownChoice(event)">Off</button>
+            <button class="dropdown-item" type="button" onclick="refreshDropdownChoice(event)">1
+              Minute</button>
+            <button class="dropdown-item" type="button" onclick="refreshDropdownChoice(event)">2
+              Minutes</button>
+            <button class="dropdown-item" type="button" onclick="refreshDropdownChoice(event)">5
+              Minutes</button>
+            <button class="dropdown-item" type="button" onclick="refreshDropdownChoice(event)">10
+              Minutes</button>
+            <button class="dropdown-item" type="button" onclick="refreshDropdownChoice(event)">20
+              Minutes</button>
+            <button class="dropdown-item" type="button" onclick="refreshDropdownChoice(event)">30
+              Minutes</button>
+            <button class="dropdown-item" type="button" onclick="refreshDropdownChoice(event)">40
+              Minutes</button>
+            <button class="dropdown-item" type="button" onclick="refreshDropdownChoice(event)">50
+              Minutes</button>
+          </div>
+        </div>
+      </div>`;
 
   // Generate options from 5 to 20 in intervals of 5
   let dateFormat = [
@@ -525,9 +556,7 @@ function createIcons() {
   selectWrapper.append(label, select);
   const container = document.querySelector("#chart-edit-container");
   container.innerHTML = "";
-  container.append(chartIcon, tableIcon, gaugeIcon);
-  let autoRefresh = $("#chkToggle1").prop("checked") || false;
-  if (autoRefresh) container.append(selectWrapper);
+  container.append(chartIcon, tableIcon, gaugeIcon, selectWrapper, autoRefresh);
 }
 
 function hideTables() {
