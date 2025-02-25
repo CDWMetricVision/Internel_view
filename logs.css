@@ -90,3 +90,7 @@ th, td {
 code {
   white-space: pre-wrap;
 }
+
+.input-wrapper {
+  margin: 5px 0;
+}

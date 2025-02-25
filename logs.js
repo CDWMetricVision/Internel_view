@@ -1,5 +1,6 @@
 let logsData = [];
 let logGroupSelected = 0;
+let selectedLogApi = "https://9v5jzdmc6a.execute-api.us-east-1.amazonaws.com/test/getlogs";
 
 function getAccountsAlarmsAPI() {
   const allAccountsAlarmsList = [
@@ -23,6 +24,15 @@ function getAccountsAlarmsAPI() {
     },
   ];
   return allAccountsAlarmsList;
+}
+
+function getLogsApi() {
+  const allAccountsLogsAPI = {
+    "MAS Sandbox Development": "https://szw9nl20j5.execute-api.us-east-1.amazonaws.com/test/logs",
+    "MAS Sandbox Test1": "https://8vauowiu26.execute-api.us-east-1.amazonaws.com/test/getlogs",
+    "MAS Sandbox Test2":"https://9v5jzdmc6a.execute-api.us-east-1.amazonaws.com/test/getlogs",
+  }
+  return allAccountsLogsAPI;
 }
 
 function clientChange(event) {
@@ -62,8 +72,13 @@ function populateCSKAccounts() {
 }
 
 function customerAccountChange(event) {
-  $("#getAlarmsData").attr("disabled", false);
+  // $("#getAlarmsData").attr("disabled", false);
+  let selectdAccount = event.target.value;
+  if(selectdAccount && getLogsApi()[selectdAccount]) {
+    selectedLogApi = getLogsApi()[selectdAccount];
+  }
 }
+
 function createTable(alarms) {
   const table = $("#alarmsList table");
 
@@ -145,12 +160,10 @@ async function getLogs() {
   // "https://9v5jzdmc6a.execute-api.us-east-1.amazonaws.com/test/getlogs" - test 2
   
   showLoader();
-  
-  const logsURL =
-    "https://9v5jzdmc6a.execute-api.us-east-1.amazonaws.com/test/getlogs";
+
   try {
     let token = sessionStorage.getItem("MetricVisionAccessToken");
-    let response = await fetch(logsURL, {
+    let response = await fetch(selectedLogApi, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
