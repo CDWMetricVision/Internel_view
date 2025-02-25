@@ -457,7 +457,7 @@ function createIcons() {
   let selectWrapper = document.createElement("div");
   selectWrapper.classList.add("periodWrapper");
   let label = document.createElement("label");
-  label.innerHTML = 'Interval : ';
+  label.innerHTML = 'Interval ';
 
   let select = document.createElement("select");
   select.classList.add("chart-interval");
