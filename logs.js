@@ -1,6 +1,6 @@
 let logsData = [];
 let logGroupSelected = 0;
-let selectedLogApi = "https://9v5jzdmc6a.execute-api.us-east-1.amazonaws.com/test/getlogs";
+let selectedLogApi = "";
 
 function getAccountsAlarmsAPI() {
   const allAccountsAlarmsList = [
@@ -163,6 +163,11 @@ async function getLogs() {
 
   try {
     let token = sessionStorage.getItem("MetricVisionAccessToken");
+    if(!selectedLogApi.length()) {
+      alert("Please select the account!");
+      hideLoader();
+      return;
+    };
     let response = await fetch(selectedLogApi, {
       headers: {
         Authorization: `Bearer ${token}`,
