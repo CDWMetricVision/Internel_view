@@ -45,18 +45,25 @@
     </nav>
     <div class="main-container-wrapper">
         <div class="d-flex flex-wrap alarm-options-wrapper">
-            <div class="d-flex">
-                <label for="customerAccounts" class="mt-2">Accounts : </label>
-                <select id="customerAccounts" class="p-2 cursor-pointer" onchange="customerAccountChange(event)">
-                    <option disabled selected hidden>--Select--</option>
-                    <option value="MAS Sandbox Development">MAS Sandbox Development</option>
-                    <option value="MAS Sandbox Test1">MAS Sandbox Test1</option>
-                    <option value="MAS Sandbox Test2">MAS Sandbox Test2</option>
-                </select>
+            <div class="drp-input d-flex justify-content-end" id="clientsSection">
+                <label class="mr-1" for="awsClients">Clients</label>
+                <button style="width: 250px;" class="dropdown-toggle drp-btn" type="button" id="awsClients" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">Select</button>
+                <div class="dropdown-menu" aria-labelledby="clientsButton">
+                    <button class="dropdown-item" onclick="selectClient('CSK')">CSK</button>
+                    <button class="dropdown-item" onclick="selectClient('MScloud')">MS Cloud</button>
+                </div>
             </div>
-            <!-- <div>
-                <button type="button" class="btn btn-secondary btn-block"  id="getAlarmsData" onClick="getAlarmsData()" disabled>Go</button>
-            </div> -->
+            <div class="drp-input d-flex justify-content-end" id="accountsSection" style="display: none;">
+                <label class="mr-1" for="customerAccounts">Accounts</label>
+                <button style="width: 250px;" class="dropdown-toggle drp-btn" type="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false" id="customerAccounts">Select</button>
+                <div class="dropdown-menu" id="accountsDropdown">
+                    <button class="dropdown-item" onclick="selectAccount(event)">MAS Sandbox Development</button>
+                    <button class="dropdown-item" onclick="selectAccount(event)">MAS Sandbox Test1</button>
+                    <button class="dropdown-item" onclick="selectAccount(event)">MAS Sandbox Test2</button>
+                </div>
+            </div>
             <div>
                 <button type="button" class="btn btn-secondary btn-block"  id="saveDashboards" onClick="getSavedDashboards()" disabled>Get Saved Dashboards</button>
             </div>

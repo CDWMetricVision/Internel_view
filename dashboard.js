@@ -38,7 +38,7 @@ function createDashboards() {
     let accessToken = sessionStorage.getItem("MetricVisionAccessToken");
   
     if (accessToken) {
-      const selectedAcc = $("#customerAccounts").val();
+      const selectedAcc = document.querySelector("#customerAccounts").innerHTML;
       const navURL = `/createDashboard.html?customerAccount=${selectedAcc}&access_token=${accessToken}`;
       window.open(navURL, '_blank');
     } else {
@@ -321,7 +321,7 @@ function chartLineGraph(graphData, container) {
 async function deleteAllDashboardHandler() {
     let payloadData = new Object();
     payloadData = {
-        'accountName' : $("#customerAccounts").val(),
+        'accountName' : document.querySelector("#customerAccounts").innerHTML,
         'dashboard_name' : ''
     }
     let apiURL = 'https://l2y83qdrp0.execute-api.us-east-1.amazonaws.com/test/delete_dashboard';
@@ -350,7 +350,7 @@ async function deleteAllDashboardHandler() {
         }
 }
 async function getSavedDashboards() {
-    let customerAccount = $("#customerAccounts").val()
+    let customerAccount = document.querySelector("#customerAccounts").innerHTML;
     let apiURL = 'https://l2y83qdrp0.execute-api.us-east-1.amazonaws.com/test/showsaveddashboaed';
     $("#loader").show();
     let payloadData = {
@@ -492,4 +492,38 @@ function checkTheme() {
   } else {
     setTheme("light");
   }
+}
+
+function clientToAccountMapping() {
+  return {
+    CSK: ["MAS Sandbox Development", "MAS Sandbox Test1", "MAS Sandbox Test2"],
+    MScloud: ["CDW Cloud MS"],
+  };
+}
+
+function selectClient(clientName) {
+  const accountsSection = document.getElementById("accountsSection");
+  accountsSection.style.display = "block";
+  document.querySelector("#awsClients").textContent = clientName;
+
+  populateAccounts(clientName);
+}
+
+function populateAccounts(client) {
+  const accountsDropdown = document.getElementById("accountsDropdown");
+  let dropdowns = "";
+  const accounts = clientToAccountMapping()[client];
+  if (accounts.length) {
+    accounts.forEach((accountName) => {
+      dropdowns += `<button class="dropdown-item" onclick="selectAccount(event)">${accountName}</button>`;
+    });
+  }
+  accountsDropdown.innerHTML = dropdowns;
+}
+
+function selectAccount(event) {
+  let title = event.target.innerHTML;
+  document.querySelector("#customerAccounts").innerHTML = title;
+  $("#saveDashboards").attr("disabled", false);
+  $("#createDashboards").attr("disabled", false);
 }
