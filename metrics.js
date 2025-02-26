@@ -503,20 +503,8 @@ function createIcons() {
   // Generate options from 5 to 20 in intervals of 5
   let dateFormat = [
     {
-      value: 1,
-      text: "1 Seconds",
-    },
-    {
-      value: 5,
-      text: "5 Seconds",
-    },
-    {
-      value: 10,
-      text: "10 Seconds",
-    },
-    {
       value: 60,
-      text: "1 Minutes",
+      text: "1 Minute",
     },
     {
       value: 300,
@@ -528,7 +516,7 @@ function createIcons() {
     },
     {
       value: 3600,
-      text: "1 hours",
+      text: "1 hour",
     },
     {
       value: 21600,
