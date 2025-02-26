@@ -62,14 +62,14 @@
     </div> -->
     <div class="filteration-container">
         <div class="accounts-options-wrapper">
-            <div class="alarm-options-wrapper">
+            <div class="alarm-options-wrapper d-flex">
                 <!-- <button class="btn btn-secondary dropdown-toggle w-100 mt-3" type="button" id="clientsButton"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Clients</button>
                 <div class="dropdown-menu" aria-labelledby="clientsButton">
                     <button class="dropdown-item" onclick="selectClient('CSK')">CSK</button>
                     <button class="dropdown-item" onclick="selectClient('MScloud')">MS Cloud</button>
                 </div> -->
-                <div class="input-wrapper clients-input-wrapper">
+                <div class="input-wrapper clients-input-wrapper d-flex">
                     <label for="clients" class="mt-2">Clients : </label>
                     <select id="clientsList" class="p-2 cursor-pointer" onchange="clientChange(event)">
                         <option disabled selected hidden value="">--Select--</option>
@@ -77,7 +77,7 @@
                         <option value="MScloud">MScloud</option>
                     </select>
                 </div>
-                <div class="input-wrapper accounts-input-wrapper" style="display: none;">
+                <div class="input-wrapper accounts-input-wrapper d-flex" style="display: none;">
                     <label for="accountsDropdown" class="mt-2">Accounts : </label>
                     <select id="accountsDropdown" class="p-2 cursor-pointer" onchange="customerAccountChange(event)">
                         <option disabled selected hidden>--Select--</option>
