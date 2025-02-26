@@ -17,18 +17,16 @@ function getAccountsAlarmsAPI() {
             "MAS Sandbox Test2": {
                 "cloudWatchAPI": "https://9v5jzdmc6a.execute-api.us-east-1.amazonaws.com/test/getalarm"
             }
+        },
+        {
+            "CDW Cloud MS": {
+                "cloudWatchAPI": "https://a37xf754ya.execute-api.us-east-1.amazonaws.com/csccloud/getalarm"
+            }
         }
     ];
     return allAccountsAlarmsList;
 }
 
-// Updated customerAccountChange to automatically trigger fetch when account is selected
-function customerAccountChange(event) {
-    const selectedAccount = event.target.value;
-    if (selectedAccount) {
-        getAlarmsData(selectedAccount);
-    }
-}
 
 // Function to filter the table based on selected state
 function filterByState(event) {
@@ -149,4 +147,38 @@ async function getAlarmsData(selectedAccount) {
 
 function createNewAlarm() {
   alert("Creating a new alarm...");
+}
+
+
+function clientToAccountMapping() {
+  return {
+    CSK: ["MAS Sandbox Development", "MAS Sandbox Test1", "MAS Sandbox Test2"],
+    MScloud: ["CDW Cloud MS"],
+  };
+}
+
+function selectClient(clientName) {
+  const accountsSection = document.getElementById("accountsSection");
+  accountsSection.style.display = "block";
+  document.querySelector("#awsClients").textContent = clientName;
+
+  populateAccounts(clientName);
+}
+
+function populateAccounts(client) {
+  const accountsDropdown = document.getElementById("accountsDropdown");
+  let dropdowns = "";
+  const accounts = clientToAccountMapping()[client];
+  if (accounts.length) {
+    accounts.forEach((accountName) => {
+      dropdowns += `<button class="dropdown-item" onclick="selectAccount(event)">${accountName}</button>`;
+    });
+  }
+  accountsDropdown.innerHTML = dropdowns;
+}
+
+function selectAccount(event) {
+  let title = event.target.innerHTML;
+  document.querySelector("#customerAccounts").innerHTML = title;
+  getAlarmsData(title);
 }
