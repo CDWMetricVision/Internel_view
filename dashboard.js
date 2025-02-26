@@ -1,12 +1,33 @@
-function toggleDarkMode() {
-            document.body.classList.toggle("dark-mode");
-            const toggleBtn = document.querySelector(".toggle-btn2");
+window.addEventListener("load",() => {
+    const queryString = window.location.search;
+    const params = new URLSearchParams(queryString);
+    if (params.has("access_token")) {
+        const token = params.get("access_token");
+        sessionStorage.setItem('MetricVisionAccessToken',token);
+    }
+})
 
-            if (document.body.classList.contains("dark-mode")) {
-                toggleBtn.innerHTML = "☀️"; // Switch to sun
-            } else {
-                toggleBtn.innerHTML = "🌙"; // Switch to moon
-            }
+document.addEventListener("DOMContentLoaded", () => {
+  checkTheme();
+});
+
+function showMetrics() {
+  window.location.href = "./metrics.html";
+}
+
+function showAlarms() {
+  // Get the access token from sessionStorage
+  let accessToken = sessionStorage.getItem("MetricVisionAccessToken");
+
+  if (accessToken) {
+    // Open the alarms page with the access token added in the URL as a query parameter
+    window.location.href = `/alarm.html?access_token=${accessToken}`;
+  } else {
+    alert("Access token not found. Please sign in again.");
+  }
+}
+function showLogs() {
+    window.location.href = "./logs.html";
 }
 function customerAccountChange(event) {
     $("#saveDashboards").attr("disabled", false);
@@ -14,9 +35,15 @@ function customerAccountChange(event) {
 }
 
 function createDashboards() {
-    const selectedAcc = $("#customerAccounts").val();
-    const navURL = '/createDashboard.html?' + 'customerAccount='+selectedAcc;
-    window.open(navURL, '_blank');
+    let accessToken = sessionStorage.getItem("MetricVisionAccessToken");
+  
+    if (accessToken) {
+      const selectedAcc = $("#customerAccounts").val();
+      const navURL = `/createDashboard.html?customerAccount=${selectedAcc}&access_token=${accessToken}`;
+      window.open(navURL, '_blank');
+    } else {
+      alert("Access token not found. Please sign in again.");
+    }
 }
 
 function handleInputChange(event) {
@@ -24,13 +51,7 @@ function handleInputChange(event) {
     $("#createDashboards").attr("disabled", false);
 }
 
-function saveDashboards() {
-    const accName = $("#accountName").val();
-    
-    if (accName.trim() === '' || accName.length === 0) {
-        window.alert("Enter Dashboard Name");
-    }
-}
+
 
 function getSavedDashboardsAPI() {
     const savedDashboardsAPI = [
@@ -98,7 +119,7 @@ function createGauge(data, container) {
     // Compute min, max, sum, and avg
     let min, max, avg, sum;
 
-    if (data.Id && (data.Id.includes("percentage") || data.Id.includes("packet_loss"))) {
+    if (data.Id.includes("percentage") || data.Id.includes("packet_loss")) {
         min = 0;
         max = 100;
         sum = "N/A";
@@ -244,20 +265,102 @@ function createTable(data, container) {
         })
     }
     table.appendChild(tableBody);
-    tableWrapper.setAttribute("style", "display: none !important");
     container.appendChild(tableWrapper);
+}
+function createTableLineGauge(data,container) {
+    if (data.Id.includes("percentage")) {
+        data.Values.forEach(function(value, index) {
+            data.Values[index] = Math.floor(value * 100)
+        })
+    }
+    createLineGraphNew(data, container);
+}
+function createLineGraphNew(data, container) {
+    let metric = data.Id;
+    let chartMetricData = [];
+    for (let i = 0; i < data["Timestamps"].length; i++) {
+        let chartData = [];
+        if (metric === "to_instance_packet_loss_rate") {
+            chartData.push(data["Timestamps"][i], data["Values"][i].toFixed(3))
+            chartMetricData.push(chartData)
+            continue
+        } else {
+            chartData.push(data["Timestamps"][i], data["Values"][i])
+            chartMetricData.push(chartData)
+        }
+    }
+    let graphData = {
+        "title": metric,
+        "xAxis": "Interval",
+        "yAxis": metric,
+        "data": chartMetricData
+    }
+    chartLineGraph(graphData, container)
+}
+function chartLineGraph(graphData, container) {
+    let {title, xAxis, yAxis, data} = graphData;
+    let chart = anychart.line();
+    chart.data(data);
+    chart.title(cleanMetricName(title));
+    
+    // Step 5: Customize axes
+    chart.xAxis().title(xAxis);
+
+    let flexDiv = document.createElement("section");
+    flexDiv.classList.add("flex-grow-1");
+    let flexDivId = `lineChart_${title}`;
+    flexDiv.setAttribute("id", flexDivId);
+    flexDiv.setAttribute("class", "line-chart");
+
+    // Step 6: Display the chart
+    chart.container(flexDiv);
+    chart.draw();
+    container.appendChild(flexDiv);
+
+}
+async function deleteAllDashboardHandler() {
+    let payloadData = new Object();
+    payloadData = {
+        'accountName' : $("#customerAccounts").val(),
+        'dashboard_name' : ''
+    }
+    let apiURL = 'https://l2y83qdrp0.execute-api.us-east-1.amazonaws.com/test/delete_dashboard';
+        if (window.confirm("Are you sure, want to delete all the saved dashboards?")) {
+            $("#loader").show();
+            try{
+                let response = await fetch(apiURL, {
+                    method: 'DELETE',
+                    body: JSON.stringify(payloadData)
+                })
+                if (!response.ok) {
+                    $("#loader").hide();
+                    window.alert("Dashboard Deletion Not Successful");
+                    console.error("Deletion Not Successful");
+                } else {
+                    $("#loader").hide();
+                    window.alert("Dashboard Deleted Successfully");
+                    getSavedDashboards();
+                }
+            }
+            catch(err){
+                $("#loader").hide();
+            }
+        } else {
+            console.log("Cancelled!");
+        }
 }
 async function getSavedDashboards() {
     let customerAccount = $("#customerAccounts").val()
-    const apis = getSavedDashboardsAPI();
-    let apiURL = apis
-    .filter(account => account[customerAccount])
-    .map(account => account[customerAccount])[0];
+    let apiURL = 'https://l2y83qdrp0.execute-api.us-east-1.amazonaws.com/test/showsaveddashboaed';
     $("#loader").show();
+    let payloadData = {
+        "accountName": customerAccount
+    }
     try{
         await fetch(apiURL,
             {
-                method: "GET",
+                method: 'POST',
+                body: JSON.stringify(payloadData)
             }
         ).then(response =>{
             if (!response.ok) {
@@ -265,69 +368,70 @@ async function getSavedDashboards() {
             }
             return response.json();
             }).then(data=>{
-                const body = data.body;
-                console.log(body.data);
+                const body = JSON.parse(data.body);
+                let parsedData = JSON.parse(body["data"]);
                 $(".chartContainer").show();
                 let chartContainer = document.querySelector(".chartContainer");
                 $(".chartContainer").empty();
-                // chartContainer.empty();
                 $(".dashboard-container").empty();
-
-                for (const key in body.data) {
-                    let div = document.createElement("div");
-                    div.classList.add("dashboard-container");
-                    let dasboardContentWrapper = document.createElement("div");
-                    dasboardContentWrapper.classList.add("dashboard-wrapper");
-                    let p = document.createElement("p");
-                    p.innerHTML = `${key} Dashboard`;
-                    div.append(p);
-
-                    console.log(`Key: ${key}`);
-                    
-                    const parsedData = JSON.parse(body.data[key]);
-                    const metrics = parsedData.widgets.map(widget => ({
-                        name: widget.properties.metrics[0][1], // Metric name
-                        instanceId: widget.properties.metrics[0][3], // Instance ID
-                        region: widget.properties.region
-                    }));
-                    // const timeSeriesData = generateDataWithTimeZone();
-                    timeSeriesData = []; // need to change accordingly for the data recieved
-
-                    if (parsedData.widgets && parsedData.widgets.length > 0) {
-                        for (const widget of parsedData.widgets) {
-                            let id = 'id_' + Math.random().toString(36).substr(2, 9);
-                            let innerDiv = document.createElement("div");
-                            innerDiv.id = id;
-                            innerDiv.classList.add("chart");
-                            dasboardContentWrapper.append(innerDiv);
-                            if(widget.properties.view && widget.properties.view == "gauge") {
-                                createGauge({ Id: metrics[0].name, Values: timeSeriesData.map(d => d[1]) }, innerDiv);
+                if (Object.entries(parsedData).length != 0 ) {
+                    let parentdiv = document.createElement("div");
+                    parentdiv.classList.add("dashboard-parent-container");
+                    let dashboardHeader = document.createElement("p");
+                    dashboardHeader.innerHTML = "Dashboards";
+                    let deleteAllText = document.createElement("button");
+                    deleteAllText.classList.add("btn-block");
+                    deleteAllText.classList.add("btn");
+                    deleteAllText.classList.add("btn-secondary");
+                    deleteAllText.innerHTML = "Delete All";
+                    deleteAllText.addEventListener("click", deleteAllDashboardHandler);
+                    parentdiv.append(dashboardHeader);
+                    parentdiv.append(deleteAllText);
+                    chartContainer.append(parentdiv);
+                    console.log(Object.entries(parsedData).length) == 0;
+                    for (const [keys,data] of Object.entries(parsedData)) {
+                        // console.log(values);
+                        // console.log(data);
+                            let div = document.createElement("div");
+                            div.classList.add("dashboard-container");
+                            let dasboardContentWrapper = document.createElement("div");
+                            dasboardContentWrapper.classList.add("dashboard-wrapper");
+                            let p = document.createElement("p");
+                            p.innerHTML = `${data[0]["name"]} Dashboard`;
+                            div.append(p);
+        
+                            for(const [keys,mData] of Object.entries(data[0]["data"]["MetricDataResults"])) {
+                                let innerDiv = document.createElement("div");
+                                let id = 'id_' + Math.random().toString(36).substr(2, 9);
+                                innerDiv.id = id;
+                                innerDiv.classList.add("chart");
+                                dasboardContentWrapper.append(innerDiv);
+                                div.append(dasboardContentWrapper);
+                                if (mData.Id.includes("percentage")) {
+                                    mData.Values.forEach(function(value, index) {
+                                        mData.Values[index] = Math.floor(value * 100)
+                                    })
+                                }
+                                if(data[0]["widgetType"].toLowerCase() == 'line') {
+                                    createTableLineGauge(mData, innerDiv);
+                                }
+                                if(data[0]["widgetType"].toLowerCase() == 'numberchart') {
+                                    createTable(mData, innerDiv);
+                                }
+                                if(data[0]["widgetType"].toLowerCase() == 'gauge') {
+                                    createGauge(mData, innerDiv);
+                                }
                             }
-                            else if(widget.properties.view && widget.properties.view == "bar"){
-                                renderChart(innerDiv, widget["properties"]["title"], timeSeriesData);
-                            }
-                            else if(widget.properties.view && widget.properties.view == "table"){
-                                // need to change
-                                // createTable({ Id: metrics[0].name, Values: timeSeriesData, Timestamps: timeSeriesData }, innerDiv);
-                                renderChart(innerDiv, widget["properties"]["title"], timeSeriesData); 
-                            }
-                            else {
-                                renderChart(innerDiv, widget["properties"]["title"], timeSeriesData);
-                            }
-                            console.log(`  Type: ${widget.type}`);
-                            console.log(`  Position: (${widget.x}, ${widget.y})`);
-                            console.log(`  Size: ${widget.width}x${widget.height}`);
-                            console.log(`  Properties:`, widget.properties);
-                        }
-                        div.append(dasboardContentWrapper);
-                    } else {
-                        console.log("  No widgets found.");
+                            div.append(dasboardContentWrapper);
+                            chartContainer.append(div);
                     }
-                    chartContainer.append(div);
+                } else {
+                    let noDataFoundContainer = document.createElement("p");
+                    noDataFoundContainer.innerHTML = "No Saved Dashboards";
+                    noDataFoundContainer.style = "text-align:center";
+                    chartContainer.append(noDataFoundContainer);
                 }
-                // createTable(body);
                 $("#loader").hide();
-
             })
             .catch(error =>{
                 $("#loader").hide();
@@ -359,4 +463,33 @@ function selectAllConnectMetrics(event) {
     instanceMetricsCheckboxes.forEach(checkbox => {
         checkbox.checked = event.target.checked;
     })
+}
+
+function toggleDarkMode() {
+  // document.body.classList.toggle("dark-mode");
+    const storedTheme = localStorage.getItem("theme");
+    setTheme(storedTheme == "dark" ? "light" : "dark");
+}
+
+function setTheme(theme) {
+    const toggleBtn = document.querySelector(".toggle-btn2");
+  if (theme === "dark") {
+    document.body.classList.add("dark-mode");
+    localStorage.setItem("theme", "dark");
+    toggleBtn.innerHTML = "☀️"; // Switch to sun
+  } else {
+    document.body.classList.remove("dark-mode");
+    localStorage.setItem("theme", "light");
+    toggleBtn.innerHTML = "🌙"; // Switch to moon
+  }
+}
+
+function checkTheme() {
+  // Load theme from localStorage on page load
+  const storedTheme = localStorage.getItem("theme");
+  if (storedTheme) {
+    setTheme(storedTheme);
+  } else {
+    setTheme("light");
+  }
 }
