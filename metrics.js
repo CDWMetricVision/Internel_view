@@ -471,7 +471,7 @@ function createIcons() {
   let autoRefresh = document.createElement("div");
   autoRefresh.innerHTML = `
       <div class="d-flex justify-content-start input-wrapper autorefresh">
-        <label class="mr-1">Auto Refresh</label>
+        <label class="mr-1 mt-2">Auto Refresh</label>
         <div class="dropdown">
           <button class="btn btn-info dropdown-toggle" type="button" id="autoRefreshButton"
             style="padding: 5px; width: 150px; height: 38px;" data-toggle="dropdown"
@@ -632,9 +632,10 @@ function hideOtherCharts(e) {
 }
 
 async function handlePeriodChange(e) {
-  const section = e.target.closest("section");
-  if (!section) return;
+  const select = e.target.closest("select");
+  if (!select) return;
   $("#loader").show();
+  const allMetrics = getAllMetrics();
   let periodIntervalVal = e.target.value * 60;
   let startDate = document.querySelector("#customStartDate").value;
   let endDate = document.querySelector("#customEndDate").value;
@@ -669,7 +670,7 @@ async function handlePeriodChange(e) {
     endUTC,
     "",
     "",
-    section.id,
+    allMetrics,
     periodIntervalVal
   );
   if (!data.result) {
@@ -1027,6 +1028,16 @@ function chooseMetrics(event) {
   };
 }
 
+function getAllMetrics() {
+  let individualMetricsList = [];
+  let instanceMetricsCheckboxes =
+    document.querySelectorAll(".instance-metrics");
+  instanceMetricsCheckboxes.forEach((checkbox) => {
+    individualMetricsList.push(checkbox.id);
+  });
+  return individualMetricsList.toString();
+}
+
 async function submitCustomDateTimeframe() {
   let startDate = document.querySelector("#customStartDate").value;
   let endDate = document.querySelector("#customEndDate").value;
@@ -1197,6 +1208,7 @@ function refreshDropdownChoice(event) {
       Eastern: "America/New_York",
       UTC: "UTC",
     };
+    let allMetrics = getAllMetrics();
     if (localTimezoneChoice != "Local") {
       formatterOptions.timeZone = timezoneFormats[localTimezoneChoice];
     }
@@ -1212,7 +1224,7 @@ function refreshDropdownChoice(event) {
       endUTC,
       chosenMetrics["contactName"],
       chosenMetrics["queueName"],
-      chosenMetrics["individualMetricsString"]
+      allMetrics
     );
     if (!data.result) {
       sectionHeader.removeChild(loadingModal);
