@@ -55,16 +55,23 @@ function handleInputChange(event) {
 
 function getSavedDashboardsAPI() {
     const savedDashboardsAPI = [
-        {
-            "MAS Sandbox Development":"https://szw9nl20j5.execute-api.us-east-1.amazonaws.com/test/getdashboards",
-        },
-        {
-            "MAS Sandbox Test1":"https://8vauowiu26.execute-api.us-east-1.amazonaws.com/test/getdashboards",
-        },
-        {
-            "MAS Sandbox Test2":"https://9v5jzdmc6a.execute-api.us-east-1.amazonaws.com/test/getdashboards",
-        }
-    ]
+      {
+        "MAS Sandbox Development":
+          "https://szw9nl20j5.execute-api.us-east-1.amazonaws.com/test/getdashboards",
+      },
+      {
+        "MAS Sandbox Test1":
+          "https://8vauowiu26.execute-api.us-east-1.amazonaws.com/test/getdashboards",
+      },
+      {
+        "MAS Sandbox Test2":
+          "https://9v5jzdmc6a.execute-api.us-east-1.amazonaws.com/test/getdashboards",
+      },
+      {
+        "CDW Cloud MS":
+          "https://2zjrlu9al4.execute-api.us-east-1.amazonaws.com/test/showsaveDashboard",
+      },
+    ];
     return savedDashboardsAPI;
 }
 function generateDataWithTimeZone() {

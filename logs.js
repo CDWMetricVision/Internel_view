@@ -31,6 +31,7 @@ function getLogsApi() {
     "MAS Sandbox Development": "https://szw9nl20j5.execute-api.us-east-1.amazonaws.com/test/logs",
     "MAS Sandbox Test1": "https://8vauowiu26.execute-api.us-east-1.amazonaws.com/test/getlogs",
     "MAS Sandbox Test2":"https://9v5jzdmc6a.execute-api.us-east-1.amazonaws.com/test/getlogs",
+    "CDW Cloud MS": "https://a37xf754ya.execute-api.us-east-1.amazonaws.com/csccloud/logs"
   }
   return allAccountsLogsAPI;
 }
@@ -57,8 +58,7 @@ function populateMScloudAccounts() {
   const accountsDropdown = document.getElementById("accountsDropdown");
   accountsDropdown.innerHTML = `
         <option disabled selected hidden>--Select--</option>
-        <option value="MScloud Account 1">MScloud Account 1</option>
-        <option value="MScloud Account 2">MScloud Account 2</option>
+        <option value="CDW Cloud MS">CDW Cloud MS</option>
     `;
 }
 
