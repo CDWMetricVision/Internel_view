@@ -70,7 +70,7 @@ function getSavedDashboardsAPI() {
       {
         "CDW Cloud MS":
           "https://2zjrlu9al4.execute-api.us-east-1.amazonaws.com/test/showsaveDashboard",
-      },
+      }
     ];
     return savedDashboardsAPI;
 }
