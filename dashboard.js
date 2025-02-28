@@ -331,7 +331,7 @@ async function deleteAllDashboardHandler() {
         'accountName' : document.querySelector("#customerAccounts").innerHTML,
         'dashboard_name' : ''
     }
-    let apiURL = 'https://l2y83qdrp0.execute-api.us-east-1.amazonaws.com/test/delete_dashboard';
+    let apiURL = getSavedDashboardsAPI()[accountName];
         if (window.confirm("Are you sure, want to delete all the saved dashboards?")) {
             $("#loader").show();
             try{
