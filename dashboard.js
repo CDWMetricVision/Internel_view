@@ -358,7 +358,7 @@ async function deleteAllDashboardHandler() {
 }
 async function getSavedDashboards() {
     let customerAccount = document.querySelector("#customerAccounts").innerHTML;
-    let apiURL = 'https://l2y83qdrp0.execute-api.us-east-1.amazonaws.com/test/showsaveddashboaed';
+    let apiURL = getSavedDashboardsAPI()[accountName];
     $("#loader").show();
     let payloadData = {
         "accountName": customerAccount
