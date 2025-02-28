@@ -54,24 +54,12 @@ function handleInputChange(event) {
 
 
 function getSavedDashboardsAPI() {
-    const savedDashboardsAPI = [
-      {
-        "MAS Sandbox Development":
-          "https://szw9nl20j5.execute-api.us-east-1.amazonaws.com/test/getdashboards",
-      },
-      {
-        "MAS Sandbox Test1":
-          "https://8vauowiu26.execute-api.us-east-1.amazonaws.com/test/getdashboards",
-      },
-      {
-        "MAS Sandbox Test2":
-          "https://9v5jzdmc6a.execute-api.us-east-1.amazonaws.com/test/getdashboards",
-      },
-      {
-        "CDW Cloud MS":
-          "https://2zjrlu9al4.execute-api.us-east-1.amazonaws.com/test/showsaveDashboard",
-      }
-    ];
+    const savedDashboardsAPI = {
+        "MAS Sandbox Development": "https://szw9nl20j5.execute-api.us-east-1.amazonaws.com/test/getdashboards",
+        "MAS Sandbox Test1": "https://8vauowiu26.execute-api.us-east-1.amazonaws.com/test/getdashboards",
+        "MAS Sandbox Test2": "https://9v5jzdmc6a.execute-api.us-east-1.amazonaws.com/test/getdashboards",
+        "CDW Cloud MS": "https://2zjrlu9al4.execute-api.us-east-1.amazonaws.com/test/showsaveDashboard",
+    };
     return savedDashboardsAPI;
 }
 function generateDataWithTimeZone() {
@@ -327,8 +315,9 @@ function chartLineGraph(graphData, container) {
 }
 async function deleteAllDashboardHandler() {
     let payloadData = new Object();
+    let accountName = document.querySelector("#customerAccounts").innerHTML;
     payloadData = {
-        'accountName' : document.querySelector("#customerAccounts").innerHTML,
+        'accountName' : accountName,
         'dashboard_name' : ''
     }
     let apiURL = getSavedDashboardsAPI()[accountName];
@@ -357,12 +346,12 @@ async function deleteAllDashboardHandler() {
         }
 }
 async function getSavedDashboards() {
-    let customerAccount = document.querySelector("#customerAccounts").innerHTML;
+    let accountName = document.querySelector("#customerAccounts").innerHTML;
     let apiURL = getSavedDashboardsAPI()[accountName];
     $("#loader").show();
     let payloadData = {
-        "accountName": customerAccount
-    }
+      accountName: accountName,
+    };
     try{
         await fetch(apiURL,
             {
