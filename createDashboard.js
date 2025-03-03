@@ -69,7 +69,7 @@ function accountsAndConnectInstancesObject() {
                     "cdwcloudsolutioncentre": "4c2a8892-8b0d-415d-84a5-9cadeba8c67a"
                 }
             }
-        }        
+        },      
     ]
     return allAccountsList;
 }
