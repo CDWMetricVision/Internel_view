@@ -29,6 +29,9 @@ function showLogs() {
         },
         {
             "MAS Sandbox Test2":"https://9v5jzdmc6a.execute-api.us-east-1.amazonaws.com/test",
+        },
+        {
+            "CDW Cloud MS": "https://2zjrlu9al4.execute-api.us-east-1.amazonaws.com/test",
         }
     ]
     return savedDashboardsAPI;
@@ -58,7 +61,15 @@ function accountsAndConnectInstancesObject() {
                     "mastest2": "ce2575a1-6ad8-4694-abd6-53acf392c698"
                 }
             }
-        }
+        },
+        {
+            "CDW Cloud MS": {
+              "connectInstances": {
+                    "cdwcloudms": "81929398-ea15-429d-8259-a85d54c05e9b",
+                    "cdwcloudsolutioncentre": "4c2a8892-8b0d-415d-84a5-9cadeba8c67a"
+                }
+            }
+        }        
     ]
     return allAccountsList;
 }
