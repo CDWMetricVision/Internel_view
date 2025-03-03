@@ -629,6 +629,7 @@ async function handlePeriodChange(e) {
   let endDate = document.querySelector("#customEndDate").value;
   let startTime = document.querySelector("#startTime").value;
   let endTime = document.querySelector("#endTime").value;
+  let chosenMetrics = chooseMetrics();
   let timezoneChoice = document.querySelector("#timezoneButton").innerHTML;
   let localTimezoneChoice = timezoneChoice.split(" ")[0];
   let formatterOptions = {
