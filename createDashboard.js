@@ -738,22 +738,19 @@ async function saveDashboards() {
     const dashboardData = sessionStorage.getItem('MetricVisionDashboardData');
     const queryString = window.location.search;
     const params = new URLSearchParams(queryString);
-    
     if (accName.trim() === '' || accName.length === 0) {
         window.alert("Enter Dashboard Name");
         return;
     }
-    
-    if (!dashboardData) {
+    if(!dashboardData) {
         window.alert("There is no valid dashboard to save!!");
         return;
     } 
-    
     let dashboardPayloadData = new Object();
     let payloadData = new Object();
     dashboardPayloadData = {
-        'data': JSON.parse(dashboardData),
-        'name': accName,
+        'data' : JSON.parse(dashboardData),
+        'name' : accName,
         'widgetType': document.querySelector("#widgetSelection").dataset.selectedwidget.toLowerCase(),
     }
     payloadData = {
@@ -762,50 +759,26 @@ async function saveDashboards() {
             dashboardPayloadData
         ]
     }
-
-    console.log("payloadData", payloadData);
-
-    // Get the selected account name from the account list function
-    const allAccountsList = accountsAndConnectInstancesObject();
-    
-    // Default API URL
-    let paramURL = "";
-    
-    // Check for the selected account and assign corresponding API URL
-    for (let account of allAccountsList) {
-        if (account[accName]) {
-            if (accName === "MAS Sandbox Development" || accName === "MAS Sandbox Test1" || accName === "MAS Sandbox Test2") {
-                paramURL = "https://l2y83qdrp0.execute-api.us-east-1.amazonaws.com/test/saveDashboard";
-            } else if (accName === "CDW Cloud MS") {
-                paramURL = "https://2zjrlu9al4.execute-api.us-east-1.amazonaws.com/test/saveDashboard";
-            }
-        }
-    }
-
-    if (!paramURL) {
-        window.alert("Invalid account selected!");
-        return;
-    }
-
+    console.log("payloadData",payloadData);
+    let paramURL = "https://l2y83qdrp0.execute-api.us-east-1.amazonaws.com/test/saveDashboard";
     try {
         $("#loader").show();
         const response = await fetch(paramURL, {
             method: "POST",
             body: JSON.stringify(payloadData),
         });
-
         if (!response.ok) {
             $("#loader").hide();
-            window.alert("Error occurred!!");
+            window.alert("error occured!!");
         } else {
             $("#loader").hide();
-            window.alert("Successfully saved!!");
+           window.alert("successfully saved!!");
         }
-    } catch (err) {
-        console.log(err);
+    } catch(err) {
+        console.log(err)
         return {
             "errorMessage": err,
             "result": false
-        };
+        }
     }
 }
