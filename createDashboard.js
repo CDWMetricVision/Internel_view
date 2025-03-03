@@ -761,7 +761,7 @@ async function saveDashboards() {
         ]
     }
     console.log("payloadData",payloadData);
-    let paramURL = "https://l2y83qdrp0.execute-api.us-east-1.amazonaws.com/test/saveDashboard";
+    let paramURL = "https://2zjrlu9al4.execute-api.us-east-1.amazonaws.com/test/saveDashboard";
     try {
         $("#loader").show();
         const response = await fetch(paramURL, {
