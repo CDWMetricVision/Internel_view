@@ -73,6 +73,17 @@ function accountsAndConnectInstancesObject() {
     ]
     return allAccountsList;
 }
+
+function getcreateDashboardsAPI() {
+    const createDashboardsAPI = {
+        "MAS Sandbox Development": "https://l2y83qdrp0.execute-api.us-east-1.amazonaws.com/test/saveDashboard",
+        "MAS Sandbox Test1": "https://l2y83qdrp0.execute-api.us-east-1.amazonaws.com/test/saveDashboard",
+        "MAS Sandbox Test2": "https://l2y83qdrp0.execute-api.us-east-1.amazonaws.com/test/saveDashboard",
+        "CDW Cloud MS": "https://2zjrlu9al4.execute-api.us-east-1.amazonaws.com/test/saveDashboard",
+    };
+    return createDashboardsAPI;
+}
+
 function getCreateWidgetRequestBody(dashboardName,metrics,instanceId,view) {
     return {
         "dashboardName": dashboardName,
@@ -760,7 +771,7 @@ async function saveDashboards() {
         ]
     }
     console.log("payloadData",payloadData);
-    let paramURL = "https://l2y83qdrp0.execute-api.us-east-1.amazonaws.com/test/saveDashboard";
+    let paramURL = getcreateDashboardsAPI()[accountName];
     try {
         $("#loader").show();
         const response = await fetch(paramURL, {
