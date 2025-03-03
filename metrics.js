@@ -624,7 +624,7 @@ async function handlePeriodChange(e) {
   if (!select) return;
   $("#loader").show();
   const allMetrics = getAllMetrics();
-  let periodIntervalVal = e.target.value * 60;
+  let periodIntervalVal = e.target.value;
   let startDate = document.querySelector("#customStartDate").value;
   let endDate = document.querySelector("#customEndDate").value;
   let startTime = document.querySelector("#startTime").value;
