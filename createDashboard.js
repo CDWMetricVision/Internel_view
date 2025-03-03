@@ -31,7 +31,7 @@ function showLogs() {
             "MAS Sandbox Test2":"https://9v5jzdmc6a.execute-api.us-east-1.amazonaws.com/test",
         },
         {
-            "CDW Cloud MS": "https://2zjrlu9al4.execute-api.us-east-1.amazonaws.com/test",
+            "CDW Cloud MS": "https://a37xf754ya.execute-api.us-east-1.amazonaws.com/csccloud",
         }
     ]
     return savedDashboardsAPI;
