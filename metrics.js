@@ -653,14 +653,7 @@ async function handlePeriodChange(e) {
   }
   let startUTC = localDateToUTC(startDate, startTime);
   let endUTC = localDateToUTC(endDate, endTime);
-  let data = await customTimeFetchCloudWatchData(
-    startUTC,
-    endUTC,
-    "",
-    "",
-    allMetrics,
-    periodIntervalVal
-  );
+  let data = await customTimeFetchCloudWatchData(startUTC, endUTC, chosenMetrics['contactName'],chosenMetrics['queueName'],chosenMetrics['individualMetricsString'], periodIntervalVal);    
   if (!data.result) {
     $("#loader").hide();
     sectionHeader.removeChild(loadingModal);
